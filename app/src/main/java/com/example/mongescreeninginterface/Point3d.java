@@ -3,7 +3,7 @@ package com.example.mongescreeninginterface;
 import android.graphics.PointF;
 import android.util.Pair;
 
-public class Point3d extends DrawableObject<Point3d>{
+public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
     public float x;
     public float y;
     public float z;
@@ -15,7 +15,6 @@ public class Point3d extends DrawableObject<Point3d>{
         this.z = z;
     }
 
-    @Override
     public Point3d toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
         var machineX = plotCanvasViewInfo.centerPoint.x + plotCanvasViewInfo.getWidthSegmentSize() * this.x;
         var machineY = plotCanvasViewInfo.centerPoint.y + plotCanvasViewInfo.getHeightSegmentSize() * this.y;

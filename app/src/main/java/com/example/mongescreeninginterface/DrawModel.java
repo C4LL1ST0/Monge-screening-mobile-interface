@@ -5,6 +5,7 @@ import java.util.List;
 
 public class DrawModel {
     private List<DrawableObject> toDraw = new ArrayList<>();
+
     public void addObjectToDraw (DrawableObject object){
         toDraw.add(object);
     }

@@ -9,12 +9,12 @@ import android.graphics.PointF;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class PlotCanvas extends View {
-    private Paint objectPaint;
-    private Paint pointPaint;
-
-    private Paint axisPaint;
+    private final Paint objectPaint;
+    private final Paint pointPaint;
+    private final Paint axisPaint;
 
     private PlotCanvasViewInfo plotCanvasViewInfo;
     private DrawModel drawModel;
@@ -47,7 +47,7 @@ public class PlotCanvas extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
-        plotCanvasViewInfo = new PlotCanvasViewInfo(w, h, new PointF((w /2f), (h /2f)), 18, 20, 10);
+        plotCanvasViewInfo = new PlotCanvasViewInfo(w, h, new PointF((w /2f), (h /2f)), 30, 20, 10);
         invalidate();
     }
 
@@ -63,7 +63,7 @@ public class PlotCanvas extends View {
             for(var object : drawModel.getObjectsToDraw()){
 
                 if(object instanceof Point3d){
-                    drawPoint3d(canvas, (Point3d) object);
+                    drawPoint3d(canvas, (Point3d) object, false);
                 }else if(object instanceof Segment){
                     drawSegment(canvas, (Segment) object);
                 }
@@ -72,19 +72,27 @@ public class PlotCanvas extends View {
         }
     }
 
-    public void drawPoint3d(Canvas canvas, Point3d point){
-        point = point.toMachineObject(plotCanvasViewInfo);
+    public void drawPoint3d(Canvas canvas, Point3d point, boolean stopper){
+        var pointM = point.toMachineObject(plotCanvasViewInfo);
 
-        canvas.drawPoint(point.x, point.y, pointPaint);
-        canvas.drawText(point.name + "1", point.x+plotCanvasViewInfo.nameOffset, point.y-plotCanvasViewInfo.nameOffset, pointPaint);
+        canvas.drawPoint(pointM.x, pointM.y, pointPaint);
+        canvas.drawPoint(pointM.x, pointM.z, pointPaint);
 
-        canvas.drawPoint(point.x, point.z, pointPaint);
-        canvas.drawText(point.name + "2", point.x+plotCanvasViewInfo.nameOffset, point.z-plotCanvasViewInfo.nameOffset, pointPaint);
+        if(stopper){
+            canvas.drawText(pointM.name + "1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y+plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText(pointM.name + "2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z+plotCanvasViewInfo.nameOffset, pointPaint);
+        }else {
+            canvas.drawText(pointM.name + "1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText(pointM.name + "2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
+        }
     }
 
     public void drawSegment(Canvas canvas, Segment segment){
-        drawPoint3d(canvas, segment.startPoint);
-        drawPoint3d(canvas, segment.endPoint);
+        drawPoint3d(canvas, segment.startPoint, false);
+        drawPoint3d(canvas, segment.endPoint, false);
+
+        if(segment.floorStopper != null) drawPoint3d(canvas, segment.floorStopper, true);
+        if(segment.profileStopper != null) drawPoint3d(canvas, segment.profileStopper, true);
 
         var bothStartScreenings = segment.startPoint.to2Screenings(plotCanvasViewInfo);
         var s1 = bothStartScreenings.first;
