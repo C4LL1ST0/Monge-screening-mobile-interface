@@ -1,0 +1,8 @@
+* Possible upgrades
+** IDEA [#C] automatic graph rescaling
+ - change how points are plotted
+** IDEA [#B] UI
+- second activity?
+** IDEA [#A] 3D objects(cube etc.)
+** IDEA [#A] 3D objects rotation
+ - anchor point + angle

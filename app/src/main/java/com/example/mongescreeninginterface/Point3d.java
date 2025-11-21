@@ -31,4 +31,17 @@ public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
 
         return new Pair<PointF, PointF>(p1, p2);
     }
+
+    public double distanceTo(Point3d p2){
+        return new Vector3d(this, p2).length();
+    }
+
+    public Point3d getFurtherPoint(Point3d p1, Point3d p2){
+        var vector1 = new Vector3d(this, p1);
+        var vector2 = new Vector3d(this, p2);
+
+        if(vector1.compareTo(vector2) > 0) return p1;
+        else if (vector1.compareTo(vector2) < 0) return p2;
+        else return p1;
+    }
 }

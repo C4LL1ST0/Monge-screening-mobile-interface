@@ -1,6 +1,6 @@
 package com.example.mongescreeninginterface;
 
-public class Vector3d {
+public class Vector3d implements Comparable<Vector3d> {
     public float xt;
     public float yt;
     public float zt;
@@ -15,5 +15,13 @@ public class Vector3d {
         this.xt = p2.x - p1.x;
         this.yt = p2.y - p1.y;
         this.zt = p2.z - p1.z;
+    }
+    public double length(){
+        return Math.sqrt(xt*xt+yt*yt+zt*zt);
+    }
+
+    @Override
+    public int compareTo(Vector3d other) {
+        return Double.compare(this.length(), other.length());
     }
 }
