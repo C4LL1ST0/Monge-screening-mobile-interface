@@ -3,13 +3,15 @@ package com.example.mongescreeninginterface;
 import android.graphics.PointF;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
 public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
     public float x;
     public float y;
     public float z;
-    
+
     public Point3d(String name, float x, float y, float z){
-        this.name = name;
+        super(name);
         this.x = x;
         this.y = y;
         this.z = z;
@@ -43,5 +45,32 @@ public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
         if(vector1.compareTo(vector2) > 0) return p1;
         else if (vector1.compareTo(vector2) < 0) return p2;
         else return p1;
+    }
+
+    public Point3d rotate(Point3d pointOfRotation, float angle){
+        var directionVector = new Vector3d(pointOfRotation, this);
+        var triangleBaseLength = ArithmeticHelperFunctions.cosTheoremIsosceles(directionVector.length(), angle);
+
+        var c1 = new Circle("k1", pointOfRotation, directionVector.length());
+        var c2 = new Circle("k2", this, triangleBaseLength);
+        var rotatedPoints = ArithmeticHelperFunctions.findIntersection(c1, c2);
+
+        return new Point3d(name+"'", rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Point3d other = (Point3d) obj;
+        return Double.compare(x, other.x) == 0 &&
+                Double.compare(y, other.y) == 0 &&
+                Double.compare(z, other.z) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(x, y);
     }
 }

@@ -4,5 +4,5 @@
 ** IDEA [#B] UI
 - second activity?
 ** IDEA [#A] 3D objects(cube etc.)
-** IDEA [#A] 3D objects rotation
+** DONE [#A] 3D objects rotation
  - anchor point + angle

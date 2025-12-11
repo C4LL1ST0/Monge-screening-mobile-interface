@@ -24,4 +24,21 @@ public class Vector3d implements Comparable<Vector3d> {
     public int compareTo(Vector3d other) {
         return Double.compare(this.length(), other.length());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;  // same reference
+        if (obj == null || getClass() != obj.getClass()) return false; // null or different class
+
+        Vector3d other = (Vector3d) obj;
+
+        return Float.compare(xt, other.xt) == 0 &&
+                Float.compare(yt, other.yt) == 0 &&
+                Float.compare(zt, other.zt) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(xt, yt, zt);
+    }
 }

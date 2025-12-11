@@ -8,10 +8,10 @@ import org.ejml.simple.SimpleMatrix;
 public class ArithmeticHelperFunctions {
 
     public static final Point3d zeroPoint = new Point3d("", 0,0,0);
-    public static final Plane ro = new Plane(zeroPoint, new Vector3d(1,0,0), new Vector3d(0, 0, 1));
-    public static final Plane pi = new Plane(zeroPoint, new Vector3d(1,0,0), new Vector3d(0, 1, 0));
+    public static final Plane ro = new Plane("ro", zeroPoint, new Vector3d(1,0,0), new Vector3d(0, 0, 1));
+    public static final Plane pi = new Plane("pi", zeroPoint, new Vector3d(1,0,0), new Vector3d(0, 1, 0));
     @Nullable
-    public static Point3d findIntersection(Segment line, Plane plane, String name){
+    public static Point3d[] findIntersection(Segment line, Plane plane, String name){
         float[][] calculations = {
                 {plane.firstVector.xt, plane.secondVector.xt, -line.directionVector.xt},
                 {plane.firstVector.yt, plane.secondVector.yt, -line.directionVector.yt},
@@ -33,17 +33,51 @@ public class ArithmeticHelperFunctions {
             return null;
         }
 
-        return new Point3d(name,
-                (float)(line.startPoint.x + line.directionVector.xt*solved.get(2)),
-                (float)(line.startPoint.y + line.directionVector.yt*solved.get(2)),
-                (float)(line.startPoint.z + line.directionVector.zt*solved.get(2)));
+        return new Point3d[]{new Point3d(name,
+                (float) (line.startPoint.x + line.directionVector.xt * solved.get(2)),
+                (float) (line.startPoint.y + line.directionVector.yt * solved.get(2)),
+                (float) (line.startPoint.z + line.directionVector.zt * solved.get(2)))};
     }
 
-    public static Point3d findFloorStopper(Segment line, Plane plane){
-        return findIntersection(line, plane, "P");
+    @Nullable
+    public static Point3d[] findIntersection(Circle c1, Circle c2){
+        var centerPointsDistance = new Vector3d(c2.center, c1.center).length();
+
+        if(centerPointsDistance == 0) return null;
+
+        var m = ((c1.radius*c1.radius - c2.radius*c2.radius) / (2*centerPointsDistance)) + (centerPointsDistance/2);
+        var triangleHeight = Math.sqrt(c1.radius*c1.radius - m*m);
+
+        var sx = c1.center.x + (m/centerPointsDistance)*(c2.center.x-c1.center.x);
+        var sy = c1.center.y + (m/centerPointsDistance)*(c2.center.y-c1.center.y);
+
+        var cx1 = sx - (triangleHeight/centerPointsDistance)*(c1.center.y - c2.center.y);
+        var cx2 = sx + (triangleHeight/centerPointsDistance)*(c1.center.y - c2.center.y);
+        var cy1 = sy + (triangleHeight/centerPointsDistance)*(c1.center.x - c2.center.x);
+        var cy2 = sy - (triangleHeight/centerPointsDistance)*(c1.center.x - c2.center.x);
+
+        if(Double.isNaN(cx1) || Double.isNaN(cx2) || Double.isNaN(cy1) || Double.isNaN(cy2)){
+            return null;
+        }
+
+        return new Point3d[]{
+                new Point3d("R1", (float) cx1, (float) cy1, c1.center.z),
+                new Point3d("R2", (float) cx2, (float) cy2, c1.center.z),
+        };
     }
 
-    public static Point3d findProfileStopper(Segment line, Plane plane){
-        return findIntersection(line, plane, "N");
+    public static Point3d findFloorStopper(Segment line){
+        return findIntersection(line, ArithmeticHelperFunctions.pi, "P") == null ?
+                null : findIntersection(line, ArithmeticHelperFunctions.pi, "P")[0];
+    }
+
+    public static Point3d findProfileStopper(Segment line){
+        return findIntersection(line, ArithmeticHelperFunctions.ro, "N") == null ?
+                null : findIntersection(line, ArithmeticHelperFunctions.ro, "N")[0];
+    }
+
+    public static double cosTheoremIsosceles(double b, double angle){
+        angle = (Math.PI/180)*angle;
+        return Math.sqrt(b*b + b*b - (2*b*b*Math.cos(angle)));
     }
 }
