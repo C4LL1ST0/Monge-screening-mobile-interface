@@ -32,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
 //        drawModel.addObjectToDraw(new Segment("j", new Point3d("I", -2, -2, -2), new Point3d("J", 2, 2, 2)));
 
         var pointOfRotation = new Point3d("S", 0, 0, 0);
-        var pointToRotate = new Point3d("A", 2,0, 0);
-        var rotated = pointToRotate.rotate(pointOfRotation, 90);
-
         drawModel.addObjectToDraw(pointOfRotation);
+
+        var pointToRotate = new Point3d("A", 2,0, 0);
         drawModel.addObjectToDraw(pointToRotate);
+
+        var rotated = pointToRotate.rotate(pointOfRotation, 45, PlaneOrientation.XZ);
         drawModel.addObjectToDraw(rotated);
 
 

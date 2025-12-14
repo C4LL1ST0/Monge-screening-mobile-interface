@@ -8,10 +8,10 @@ import static org.junit.Assert.*;
 public class ArithmeticHelperFunctionsTest {
     @Test
     public void should_findCirclesInterSections_When_CirclesCross_AndSameZ(){
-        var c1 = new Circle("a", new Point3d("S", 0,0,0), 5);
-        var c2 = new Circle("a", new Point3d("S", 4,0,0), 5);
+        var c1 = new Circle("a", new Point3d("S", 0,0,1), 5);
+        var c2 = new Circle("a", new Point3d("S", 4,0,1), 5);
 
-        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2);
+        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2, PlaneOrientation.XY);
         assertEquals(2, intersections[0].x, 0);
         assertEquals(2, intersections[1].x, 0);
         assertEquals(-4.58d, intersections[0].y, 0.01);
@@ -23,7 +23,7 @@ public class ArithmeticHelperFunctionsTest {
         var c1 = new Circle("a", new Point3d("S", 0,0,0), 2);
         var c2 = new Circle("a", new Point3d("S", 8,0,0), 2);
 
-        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2);
+        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2, PlaneOrientation.XY);
         assertNull(intersections);
     }
 
@@ -32,7 +32,7 @@ public class ArithmeticHelperFunctionsTest {
         var c1 = new Circle("a", new Point3d("S", 0,0,0), 4);
         var c2 = new Circle("a", new Point3d("S", 8,0,0), 4);
 
-        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2);
+        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2, PlaneOrientation.XY);
         assertEquals(4, intersections[0].x, 0);
         assertEquals(4, intersections[1].x, 0);
         assertEquals(0, intersections[0].y, 0);
@@ -45,7 +45,7 @@ public class ArithmeticHelperFunctionsTest {
         var c2 = new Circle("a", new Point3d("S", 0,0,0), 4);
         assertTrue(c1.equals(c2));
 
-        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2);
+        var intersections = ArithmeticHelperFunctions.findIntersection(c1, c2, PlaneOrientation.XY);
         assertNull(intersections);
     }
 

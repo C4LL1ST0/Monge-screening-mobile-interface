@@ -47,13 +47,36 @@ public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
         else return p1;
     }
 
-    public Point3d rotate(Point3d pointOfRotation, float angle){
-        var directionVector = new Vector3d(pointOfRotation, this);
+    public Point3d rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
+        Vector2d directionVector = new Vector2d(pointOfRotation, this, planeOrientation);
         var triangleBaseLength = ArithmeticHelperFunctions.cosTheoremIsosceles(directionVector.length(), angle);
+
+        var originalX = x;
+        var originalY = y;
+        var originalZ = z;
+
+        if(planeOrientation == PlaneOrientation.XY){
+            this.z = pointOfRotation.z;
+        } else if (planeOrientation == PlaneOrientation.XZ) {
+            this.y = pointOfRotation.y;
+        }else {
+            this.x = pointOfRotation.x;
+        }
 
         var c1 = new Circle("k1", pointOfRotation, directionVector.length());
         var c2 = new Circle("k2", this, triangleBaseLength);
-        var rotatedPoints = ArithmeticHelperFunctions.findIntersection(c1, c2);
+        var rotatedPoints = ArithmeticHelperFunctions.findIntersection(c1, c2, planeOrientation);
+
+        if(planeOrientation == PlaneOrientation.XY){
+            for(Point3d p : rotatedPoints) p.z = originalZ;
+            this.z = originalZ;
+        } else if (planeOrientation == PlaneOrientation.XZ) {
+            for(Point3d p : rotatedPoints) p.y = originalY;
+            this.y = originalY;
+        }else {
+            for(Point3d p : rotatedPoints) p.x = originalX;
+            this.z = originalZ;
+        }
 
         return new Point3d(name+"'", rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
     }

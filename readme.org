@@ -1,5 +1,5 @@
 * Possible upgrades
-** IDEA [#C] automatic graph rescaling
+** IDEA [#A] automatic graph rescaling
  - change how points are plotted
 ** IDEA [#B] UI
 - second activity?
