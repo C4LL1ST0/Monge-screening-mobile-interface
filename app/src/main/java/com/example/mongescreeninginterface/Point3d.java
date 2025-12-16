@@ -81,6 +81,12 @@ public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
         return new Point3d(name+"'", rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
     }
 
+    public boolean hasSameCoord(Point3d other){
+        return Double.compare(x, other.x) == 0 &&
+                Double.compare(y, other.y) == 0 &&
+                Double.compare(z, other.z) == 0;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -89,11 +95,12 @@ public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
         Point3d other = (Point3d) obj;
         return Double.compare(x, other.x) == 0 &&
                 Double.compare(y, other.y) == 0 &&
-                Double.compare(z, other.z) == 0;
+                Double.compare(z, other.z) == 0 &&
+                name.equals(other.name);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(x, y);
+        return java.util.Objects.hash(name, x, y, z);
     }
 }
