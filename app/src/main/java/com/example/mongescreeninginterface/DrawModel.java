@@ -6,27 +6,31 @@ import java.util.stream.Collectors;
 
 public class DrawModel {
     private List<Point3d> pointsToDraw = new ArrayList<>();
-    private List<Segment> segmentsToDraw = new ArrayList<>();
+    private List<Line> segmentsToDraw = new ArrayList<>();
 
-    public void addObjectToDraw (DrawableObject object){
+    public void addObjectToDraw (IDrawable object){
         if (object instanceof Point3d) {
             pointsToDraw.add((Point3d) object);
-        }else if (object instanceof Segment) {
-            segmentsToDraw.add((Segment) object);
-            pointsToDraw.add(((Segment) object).startPoint);
-            pointsToDraw.add(((Segment) object).endPoint);
+        }else if (object instanceof Line) {
+            segmentsToDraw.add((Line) object);
+            pointsToDraw.add(((Line) object).startPoint);
+            pointsToDraw.add(((Line) object).endPoint);
 
-            if(((Segment) object).floorStopper != null){
-                pointsToDraw.add(((Segment) object).floorStopper);
+            if(((Line) object).floorStopper != null){
+                pointsToDraw.add(((Line) object).floorStopper);
             }
-            if(((Segment) object).profileStopper != null){
-                pointsToDraw.add(((Segment) object).profileStopper);
+            if(((Line) object).profileStopper != null){
+                pointsToDraw.add(((Line) object).profileStopper);
+            }
+        } else if (object instanceof Cube) {
+            for (var edge : ((Cube) object).getEdges()){
+                addObjectToDraw(edge);
             }
         }
     }
 
     public List<Point3d> getPointsToDraw(){return pointsToDraw;}
-    public List<Segment> getSegmentsToDraw(){return segmentsToDraw;}
+    public List<Line> getSegmentsToDraw(){return segmentsToDraw;}
 
     public void squashPoints(){
         var pointsToRemove = new ArrayList<Point3d>();

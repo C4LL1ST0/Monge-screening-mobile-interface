@@ -1,6 +1,6 @@
 package com.example.mongescreeninginterface;
 
-public class Plane extends GeometricObject{
+public class Plane extends GeometricObject {
     public Point3d anchorPoint;
     public Vector3d firstVector;
     public Vector3d secondVector;

@@ -3,9 +3,7 @@ package com.example.mongescreeninginterface;
 import android.graphics.PointF;
 import android.util.Pair;
 
-import androidx.annotation.NonNull;
-
-public class Point3d extends GeometricObject implements DrawableObject<Point3d>{
+public class Point3d extends GeometricObject implements IDrawable<Point3d> {
     public float x;
     public float y;
     public float z;

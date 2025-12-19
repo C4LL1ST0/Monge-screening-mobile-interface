@@ -11,6 +11,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 public class PlotCanvas extends View {
     private final Paint objectPaint;
     private final Paint pointPaint;
@@ -65,7 +67,7 @@ public class PlotCanvas extends View {
             }
 
             for(var seg : drawModel.getSegmentsToDraw()){
-                drawSegment(canvas, seg);
+                drawLine(canvas, seg);
             }
         }
     }
@@ -76,17 +78,19 @@ public class PlotCanvas extends View {
         canvas.drawPoint(pointM.x, pointM.y, pointPaint);
         canvas.drawPoint(pointM.x, pointM.z, pointPaint);
 
-        canvas.drawText("[" + pointM.name + "]1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
-        canvas.drawText("[" + pointM.name + "]2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
+        if(!Objects.equals(point.name, "")){
+            canvas.drawText("[" + pointM.name + "]1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText("[" + pointM.name + "]2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
+        }
     }
 
-    public void drawSegment(Canvas canvas, Segment segment){
+    public void drawLine(Canvas canvas, Line line){
         Pair<PointF, PointF> bothFSScreenings;
         PointF fs1 = null;
         PointF fs2 = null;
 
-        if(segment.floorStopper != null){
-            bothFSScreenings = segment.floorStopper.to2Screenings(plotCanvasViewInfo);
+        if(line.floorStopper != null){
+            bothFSScreenings = line.floorStopper.to2Screenings(plotCanvasViewInfo);
             fs1 = bothFSScreenings.first;
             fs2 = bothFSScreenings.second;
         }
@@ -95,26 +99,26 @@ public class PlotCanvas extends View {
         PointF ps1 = null;
         PointF ps2 = null;
 
-        if(segment.profileStopper != null){
-            bothPSScreenings = segment.profileStopper.to2Screenings(plotCanvasViewInfo);
+        if(line.profileStopper != null){
+            bothPSScreenings = line.profileStopper.to2Screenings(plotCanvasViewInfo);
             ps1 = bothPSScreenings.first;
             ps2 = bothPSScreenings.second;
         }
 
-        var bothStartScreenings = segment.startPoint.to2Screenings(plotCanvasViewInfo);
+        var bothStartScreenings = line.startPoint.to2Screenings(plotCanvasViewInfo);
         var s1 = bothStartScreenings.first;
         var s2 = bothStartScreenings.second;
 
-        var bothEndScreenings = segment.endPoint.to2Screenings(plotCanvasViewInfo);
+        var bothEndScreenings = line.endPoint.to2Screenings(plotCanvasViewInfo);
         var e1 = bothEndScreenings.first;
         var e2 = bothEndScreenings.second;
 
-        if(segment.floorStopper != null && segment.profileStopper != null){
-            if(segment.floorStopper.distanceTo(segment.profileStopper) != 0){
+        if(line.floorStopper != null && line.profileStopper != null){
+            if(line.floorStopper.distanceTo(line.profileStopper) != 0){
                 canvas.drawLine(ps1.x, ps1.y, fs1.x, fs1.y, objectPaint);
                 canvas.drawLine(ps2.x, ps2.y, fs2.x, fs2.y, objectPaint);
             }else {
-                var bothFurthestPointScreenings = segment.floorStopper.getFurtherPoint(segment.startPoint, segment.endPoint).to2Screenings(plotCanvasViewInfo);
+                var bothFurthestPointScreenings = line.floorStopper.getFurtherPoint(line.startPoint, line.endPoint).to2Screenings(plotCanvasViewInfo);
                 var furthest1 = bothFurthestPointScreenings.first;
                 var furthest2 = bothFurthestPointScreenings.second;
 
@@ -122,16 +126,16 @@ public class PlotCanvas extends View {
                 canvas.drawLine(furthest2.x, furthest2.y, fs2.x, fs2.y, objectPaint);
             }
 
-        }else if(segment.floorStopper != null){
-            var bothFurthestPointScreenings = segment.floorStopper.getFurtherPoint(segment.startPoint, segment.endPoint).to2Screenings(plotCanvasViewInfo);
+        }else if(line.floorStopper != null){
+            var bothFurthestPointScreenings = line.floorStopper.getFurtherPoint(line.startPoint, line.endPoint).to2Screenings(plotCanvasViewInfo);
             var furthest1 = bothFurthestPointScreenings.first;
             var furthest2 = bothFurthestPointScreenings.second;
 
             canvas.drawLine(furthest1.x, furthest1.y, fs1.x, fs1.y, objectPaint);
             canvas.drawLine(furthest2.x, furthest2.y, fs2.x, fs2.y, objectPaint);
 
-        }else if(segment.profileStopper != null){
-            var bothFurthestPointScreenings = segment.profileStopper.getFurtherPoint(segment.startPoint, segment.endPoint).to2Screenings(plotCanvasViewInfo);
+        }else if(line.profileStopper != null){
+            var bothFurthestPointScreenings = line.profileStopper.getFurtherPoint(line.startPoint, line.endPoint).to2Screenings(plotCanvasViewInfo);
             var furthest1 = bothFurthestPointScreenings.first;
             var furthest2 = bothFurthestPointScreenings.second;
 
@@ -143,7 +147,9 @@ public class PlotCanvas extends View {
             canvas.drawLine(s2.x, s2.y, e2.x, e2.y, objectPaint);
         }
 
-        canvas.drawText(segment.name + "1", e1.x+plotCanvasViewInfo.nameOffset, e1.y+plotCanvasViewInfo.nameOffset, pointPaint);
-        canvas.drawText(segment.name + "2", e2.x+plotCanvasViewInfo.nameOffset, e2.y+plotCanvasViewInfo.nameOffset, pointPaint);
+        if(!Objects.equals(line.name, "")){
+            canvas.drawText(line.name + "1", e1.x+plotCanvasViewInfo.nameOffset, e1.y+plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText(line.name + "2", e2.x+plotCanvasViewInfo.nameOffset, e2.y+plotCanvasViewInfo.nameOffset, pointPaint);
+        }
     }
 }

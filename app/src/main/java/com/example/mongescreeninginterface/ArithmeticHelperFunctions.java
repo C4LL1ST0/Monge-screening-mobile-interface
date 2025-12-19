@@ -11,7 +11,7 @@ public class ArithmeticHelperFunctions {
     public static final Plane ro = new Plane("ro", zeroPoint, new Vector3d(1,0,0), new Vector3d(0, 0, 1));
     public static final Plane pi = new Plane("pi", zeroPoint, new Vector3d(1,0,0), new Vector3d(0, 1, 0));
     @Nullable
-    public static Point3d[] findIntersection(Segment line, Plane plane, String name){
+    public static Point3d[] findIntersection(Line line, Plane plane, String name){
         float[][] calculations = {
                 {plane.firstVector.xt, plane.secondVector.xt, -line.directionVector.xt},
                 {plane.firstVector.yt, plane.secondVector.yt, -line.directionVector.yt},
@@ -96,12 +96,12 @@ public class ArithmeticHelperFunctions {
         }
     }
 
-    public static Point3d findFloorStopper(Segment line){
+    public static Point3d findFloorStopper(Line line){
         return findIntersection(line, ArithmeticHelperFunctions.pi, "P") == null ?
                 null : findIntersection(line, ArithmeticHelperFunctions.pi, "P")[0];
     }
 
-    public static Point3d findProfileStopper(Segment line){
+    public static Point3d findProfileStopper(Line line){
         return findIntersection(line, ArithmeticHelperFunctions.ro, "N") == null ?
                 null : findIntersection(line, ArithmeticHelperFunctions.ro, "N")[0];
     }

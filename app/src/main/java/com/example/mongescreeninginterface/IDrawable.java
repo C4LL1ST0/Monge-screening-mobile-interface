@@ -1,5 +1,5 @@
 package com.example.mongescreeninginterface;
 
-public interface DrawableObject<T extends  DrawableObject<T>> {
+public interface IDrawable<T extends IDrawable<T>> {
     T toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo);
 }

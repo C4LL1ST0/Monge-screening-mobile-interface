@@ -1,11 +1,8 @@
 package com.example.mongescreeninginterface;
 
-import static com.example.mongescreeninginterface.ArithmeticHelperFunctions.pi;
-import static com.example.mongescreeninginterface.ArithmeticHelperFunctions.ro;
-
 import androidx.annotation.Nullable;
 
-public class Segment extends GeometricObject implements DrawableObject<Segment>{
+public class Line extends GeometricObject implements IDrawable<Line> {
     public Point3d startPoint;
     public Point3d endPoint;
     @Nullable
@@ -15,7 +12,7 @@ public class Segment extends GeometricObject implements DrawableObject<Segment>{
 
     public Vector3d directionVector;
 
-    public Segment(String name, Point3d startPoint, Point3d endPoint){
+    public Line(String name, Point3d startPoint, Point3d endPoint){
         super(name);
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -28,8 +25,8 @@ public class Segment extends GeometricObject implements DrawableObject<Segment>{
         if(ps != null) this.profileStopper = ps;
     }
 
-    public Segment toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
-        return new Segment(name, startPoint.toMachineObject(plotCanvasViewInfo), endPoint.toMachineObject(plotCanvasViewInfo));
+    public Line toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
+        return new Line(name, startPoint.toMachineObject(plotCanvasViewInfo), endPoint.toMachineObject(plotCanvasViewInfo));
     }
 
     @Override
@@ -37,7 +34,7 @@ public class Segment extends GeometricObject implements DrawableObject<Segment>{
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
-        Segment other = (Segment) obj;
+        Line other = (Line) obj;
         return startPoint.equals(other.startPoint) && endPoint.equals(other.endPoint) ||
                 startPoint.equals(other.endPoint) && endPoint.equals(other.startPoint);
     }

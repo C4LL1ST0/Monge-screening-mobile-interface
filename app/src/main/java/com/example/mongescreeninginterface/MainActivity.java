@@ -23,8 +23,11 @@ public class MainActivity extends AppCompatActivity {
         ));
         var drawModel = new DrawModel();
 
-        drawModel.addObjectToDraw(new Segment("q", new Point3d("C", 3, 2, 1), new Point3d("D", -3, 2, 1)));
-        drawModel.addObjectToDraw(new Segment("l", new Point3d("A", 1, 2, 3), new Point3d("B", 3, 2, 1)));
+//        drawModel.addObjectToDraw(new Segment("q", new Point3d("C", 3, 2, 1), new Point3d("D", -3, 2, 1)));
+//        drawModel.addObjectToDraw(new Segment("l", new Point3d("A", 1, 2, 3), new Point3d("B", 3, 2, 1)));
+//        drawModel.squashPoints();
+        Cube c = new Cube("K", new Point3d("S", 0, 7, 7), 2);
+        drawModel.addObjectToDraw(c);
         drawModel.squashPoints();
 
         plotCanvas.setDrawModel(drawModel);

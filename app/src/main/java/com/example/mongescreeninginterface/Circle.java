@@ -1,6 +1,6 @@
 package com.example.mongescreeninginterface;
 
-public class Circle extends GeometricObject{
+public class Circle extends GeometricObject {
     public Point3d center;
     public double radius;
     public Circle(String name, Point3d center, double radius){
