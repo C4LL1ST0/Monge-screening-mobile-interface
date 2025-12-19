@@ -1,4 +1,4 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.helpers;
 
 public enum PlaneOrientation {
     XY,

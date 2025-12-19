@@ -1,6 +1,9 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.helpers;
 
 import androidx.annotation.Nullable;
+
+import com.example.mongescreeninginterface.drawableObjects.Line;
+import com.example.mongescreeninginterface.drawableObjects.Point3d;
 
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;

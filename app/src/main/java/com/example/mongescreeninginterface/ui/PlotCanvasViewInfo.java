@@ -1,6 +1,5 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.ui;
 
-import android.graphics.Point;
 import android.graphics.PointF;
 
 public class PlotCanvasViewInfo {

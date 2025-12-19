@@ -1,4 +1,6 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.helpers;
+
+import com.example.mongescreeninginterface.drawableObjects.Point3d;
 
 public class Vector3d implements Comparable<Vector3d> {
     public float xt;

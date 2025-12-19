@@ -1,6 +1,13 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.drawable3d;
 
-public class Cube extends GeometricObject implements IDrawable<Cube> {
+import com.example.mongescreeninginterface.drawableObjects.IDrawable;
+import com.example.mongescreeninginterface.drawableObjects.Line;
+import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.helpers.GeometricObject;
+import com.example.mongescreeninginterface.helpers.Vector3d;
+import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
+
+public class Cube extends GeometricObject implements IDrawable<Cube, Object> { // redo better
     private Point3d[] points = new Point3d[8];
     private final Line[] edges = new Line[12];
     private final Point3d center;
@@ -80,5 +87,10 @@ public class Cube extends GeometricObject implements IDrawable<Cube> {
             machinePoints[i] = points[i].toMachineObject(plotCanvasViewInfo);
         }
         return new Cube(name, machinePoints);
+    }
+
+    @Override
+    public Object to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo) {
+        return null;
     }
 }

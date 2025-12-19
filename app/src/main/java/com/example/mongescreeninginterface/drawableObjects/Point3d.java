@@ -1,9 +1,20 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.drawableObjects;
 
 import android.graphics.PointF;
 import android.util.Pair;
 
-public class Point3d extends GeometricObject implements IDrawable<Point3d> {
+import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
+import com.example.mongescreeninginterface.helpers.GeometricObject;
+import com.example.mongescreeninginterface.helpers.Circle;
+import com.example.mongescreeninginterface.helpers.PlaneOrientation;
+import com.example.mongescreeninginterface.helpers.Vector2d;
+import com.example.mongescreeninginterface.helpers.Vector3d;
+import com.example.mongescreeninginterface.helpers.point.PointBothScreenings;
+import com.example.mongescreeninginterface.helpers.point.PointFloorScreening;
+import com.example.mongescreeninginterface.helpers.point.PointProfileScreening;
+import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
+
+public class Point3d extends GeometricObject implements IDrawable<Point3d, PointBothScreenings> {
     public float x;
     public float y;
     public float z;
@@ -15,6 +26,7 @@ public class Point3d extends GeometricObject implements IDrawable<Point3d> {
         this.z = z;
     }
 
+    @Override
     public Point3d toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
         var machineX = plotCanvasViewInfo.centerPoint.x + plotCanvasViewInfo.getWidthSegmentSize() * this.x;
         var machineY = plotCanvasViewInfo.centerPoint.y + plotCanvasViewInfo.getHeightSegmentSize() * this.y;
@@ -23,13 +35,14 @@ public class Point3d extends GeometricObject implements IDrawable<Point3d> {
         return new Point3d(name, machineX, machineY, machineZ);
     }
 
-    public Pair<PointF, PointF> to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo){
+    @Override
+    public PointBothScreenings to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo){
         var point = toMachineObject(plotCanvasViewInfo);
 
-        var p1 = new PointF(point.x, point.y);
-        var p2 = new PointF(point.x, point.z);
+        var p1 = new PointFloorScreening(point.x, point.y);
+        var p2 = new PointProfileScreening(point.x, point.z);
 
-        return new Pair<PointF, PointF>(p1, p2);
+        return new PointBothScreenings(point.name, p1, p2);
     }
 
     public double distanceTo(Point3d p2){

@@ -3,6 +3,9 @@ package com.example.mongescreeninginterface;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.helpers.PlaneOrientation;
+
 
 public class Point3dTest {
     @Test

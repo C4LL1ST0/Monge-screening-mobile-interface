@@ -1,4 +1,4 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.helpers;
 
 public abstract class GeometricObject {
     public String name;

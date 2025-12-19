@@ -1,12 +1,28 @@
-package com.example.mongescreeninginterface;
+package com.example.mongescreeninginterface.ui;
+
+import com.example.mongescreeninginterface.drawable3d.Cube;
+import com.example.mongescreeninginterface.drawableObjects.IDrawable;
+import com.example.mongescreeninginterface.drawableObjects.Line;
+import com.example.mongescreeninginterface.drawableObjects.Point3d;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DrawModel {
+
+    private static DrawModel instance;
     private List<Point3d> pointsToDraw = new ArrayList<>();
     private List<Line> segmentsToDraw = new ArrayList<>();
+
+    private DrawModel(){}
+
+    public static DrawModel makeDrawmodel(){
+        if(instance == null){
+            instance = new DrawModel();
+        }
+        return instance;
+    }
 
     public void addObjectToDraw (IDrawable object){
         if (object instanceof Point3d) {
