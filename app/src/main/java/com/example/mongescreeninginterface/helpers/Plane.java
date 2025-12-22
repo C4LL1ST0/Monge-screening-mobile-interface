@@ -1,6 +1,6 @@
 package com.example.mongescreeninginterface.helpers;
 
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 
 public class Plane extends GeometricObject {
     public Point3d anchorPoint;

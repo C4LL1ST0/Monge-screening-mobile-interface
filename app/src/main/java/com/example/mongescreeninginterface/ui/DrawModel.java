@@ -1,9 +1,9 @@
 package com.example.mongescreeninginterface.ui;
 
-import com.example.mongescreeninginterface.drawable3d.Cube;
-import com.example.mongescreeninginterface.drawableObjects.IDrawable;
+import com.example.mongescreeninginterface.drawable3d.Object3d;
+import com.example.mongescreeninginterface.projectableObjects.IProjectable;
 import com.example.mongescreeninginterface.helpers.LineLike;
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class DrawModel {
         return instance;
     }
 
-    public void addObjectToDraw (IDrawable object){
+    public void addObjectToDraw (IProjectable object){
         if (object instanceof Point3d) {
             pointsToDraw.add((Point3d) object);
         }else if (object instanceof LineLike) {
@@ -38,10 +38,12 @@ public class DrawModel {
             if (((LineLike) object).profileStopper != null) {
                 pointsToDraw.add(((LineLike) object).profileStopper);
             }
-        }else if (object instanceof Cube) {
-            for (var edge : ((Cube) object).getEdges()){
-                addObjectToDraw(edge);
-            }
+        }
+    }
+
+    public void addObjectToDraw (Object3d object){
+        for (var edge : object.getEdges()){
+            addObjectToDraw(edge);
         }
     }
 

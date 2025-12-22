@@ -1,8 +1,8 @@
-package com.example.mongescreeninginterface.drawableObjects;
+package com.example.mongescreeninginterface.projectableObjects;
 
 import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 
-public interface IDrawable<T, C> {
+public interface IProjectable<T, C> {
     T toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo);
     C to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo);
 }

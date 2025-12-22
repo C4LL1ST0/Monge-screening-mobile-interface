@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.mongescreeninginterface.drawable3d.Cube;
-import com.example.mongescreeninginterface.drawableObjects.Line;
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 
 public class MainActivity extends AppCompatActivity {

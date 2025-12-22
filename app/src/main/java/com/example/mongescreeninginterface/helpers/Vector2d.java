@@ -1,6 +1,6 @@
 package com.example.mongescreeninginterface.helpers;
 
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 
 public class Vector2d implements Comparable<Vector2d>{
     public float a;

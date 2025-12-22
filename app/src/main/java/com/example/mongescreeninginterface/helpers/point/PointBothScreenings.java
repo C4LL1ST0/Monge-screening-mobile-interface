@@ -1,6 +1,6 @@
 package com.example.mongescreeninginterface.helpers.point;
 
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 
 public record PointBothScreenings(String name, PointFloorScreening pointFloorScreening, PointProfileScreening pointProfileScreening) {
     public PointBothScreenings(Point3d point3d){

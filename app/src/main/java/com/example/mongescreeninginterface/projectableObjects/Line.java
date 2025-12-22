@@ -1,4 +1,4 @@
-package com.example.mongescreeninginterface.drawableObjects;
+package com.example.mongescreeninginterface.projectableObjects;
 
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
 import com.example.mongescreeninginterface.helpers.LineLike;

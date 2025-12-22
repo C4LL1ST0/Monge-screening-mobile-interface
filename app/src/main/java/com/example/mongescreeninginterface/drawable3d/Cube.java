@@ -1,7 +1,7 @@
 package com.example.mongescreeninginterface.drawable3d;
 
-import com.example.mongescreeninginterface.drawableObjects.Segment;
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Segment;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
 
@@ -27,6 +27,7 @@ public class Cube extends Object3d {
     public float getEdgeLengthLength() {return edgeLength;}
 
     private void initiatePoints(float edgeLength){
+        points = new Point3d[8];
         points[0] = new Point3d("A", center.x-edgeLength/2, center.y+edgeLength/2, center.z-edgeLength/2);
         points[1] = new Point3d("B", points[0].x+edgeLength, points[0].y, points[0].z);
         points[2] = new Point3d("C", points[1].x, points[1].y-edgeLength, points[1].z);
@@ -39,6 +40,7 @@ public class Cube extends Object3d {
     }
 
     private void initiateEdges(){
+        edges = new Segment[12];
         edges[0] = new Segment("", points[0], points[1]);
         edges[1] = new Segment("", points[1], points[2]);
         edges[2] = new Segment("", points[2], points[3]);

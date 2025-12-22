@@ -2,12 +2,12 @@ package com.example.mongescreeninginterface.helpers;
 
 import androidx.annotation.Nullable;
 
-import com.example.mongescreeninginterface.drawableObjects.IDrawable;
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.IProjectable;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
 
 public abstract class LineLike<T extends LineLike<T>> extends GeometricObject
-        implements IDrawable<T, LineBothScrs> {
+        implements IProjectable<T, LineBothScrs> {
     public Point3d firstPoint;
     public Point3d secondPoint;
     @Nullable

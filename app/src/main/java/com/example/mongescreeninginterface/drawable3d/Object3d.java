@@ -1,15 +1,13 @@
 package com.example.mongescreeninginterface.drawable3d;
 
-import com.example.mongescreeninginterface.drawableObjects.IDrawable;
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
-import com.example.mongescreeninginterface.drawableObjects.Segment;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Segment;
 import com.example.mongescreeninginterface.helpers.GeometricObject;
-import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class Object3d extends GeometricObject implements IDrawable<Object3d, Object> {
+public class Object3d extends GeometricObject{
     protected Point3d[] points;
     protected Segment[] edges;
     public Point3d[] getPoints(){return points;}
@@ -28,16 +26,6 @@ public class Object3d extends GeometricObject implements IDrawable<Object3d, Obj
             points.add(edge.secondPoint);
         }
         this.points = points.toArray(new Point3d[0]);
-    }
-
-    @Override
-    public Object3d toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) { // TODO
-        return null;
-    }
-
-    @Override
-    public Object to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo) { // TODO
-        return null;
     }
 
     @Override

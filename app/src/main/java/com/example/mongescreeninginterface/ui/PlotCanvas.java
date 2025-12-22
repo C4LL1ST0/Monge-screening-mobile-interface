@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.example.mongescreeninginterface.drawable3d.Object3d;
 import com.example.mongescreeninginterface.helpers.LineLike;
-import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
 
 import java.util.Objects;
