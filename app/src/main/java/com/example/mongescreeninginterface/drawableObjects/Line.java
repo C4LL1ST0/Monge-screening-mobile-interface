@@ -1,9 +1,7 @@
 package com.example.mongescreeninginterface.drawableObjects;
 
-import androidx.annotation.Nullable;
-
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
-import com.example.mongescreeninginterface.helpers.GeometricObject;
+import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.helpers.Vector3d;
 import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
 import com.example.mongescreeninginterface.helpers.line.LineFloorScr;
@@ -11,21 +9,12 @@ import com.example.mongescreeninginterface.helpers.line.LineProfileScr;
 import com.example.mongescreeninginterface.helpers.point.PointBothScreenings;
 import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 
-public class Line extends GeometricObject implements IDrawable<Line, LineBothScrs> {
-    public Point3d startPoint;
-    public Point3d endPoint;
-    @Nullable
-    public Point3d floorStopper;
-    @Nullable
-    public Point3d profileStopper;
-
-    public Vector3d directionVector;
-
-    public Line(String name, Point3d startPoint, Point3d endPoint){
+public class Line extends LineLike<Line> {
+    public Line(String name, Point3d firstPoint, Point3d secondPoint){
         super(name);
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
-        this.directionVector = new Vector3d(startPoint, endPoint);
+        this.firstPoint = firstPoint;
+        this.secondPoint = secondPoint;
+        this.directionVector = new Vector3d(firstPoint, secondPoint);
 
         var fs = ArithmeticHelperFunctions.findFloorStopper(this);
         if(fs != null) this.floorStopper = fs;
@@ -36,12 +25,12 @@ public class Line extends GeometricObject implements IDrawable<Line, LineBothScr
 
     @Override
     public Line toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
-        return new Line(name, startPoint.toMachineObject(plotCanvasViewInfo), endPoint.toMachineObject(plotCanvasViewInfo));
+        return new Line(name, firstPoint.toMachineObject(plotCanvasViewInfo), secondPoint.toMachineObject(plotCanvasViewInfo));
     }
     @Override
     public LineBothScrs to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo) {
-        var bothStartScrs = new PointBothScreenings(startPoint.toMachineObject(plotCanvasViewInfo));
-        var bothEndScrs = new PointBothScreenings(endPoint.toMachineObject(plotCanvasViewInfo));
+        var bothStartScrs = new PointBothScreenings(firstPoint.toMachineObject(plotCanvasViewInfo));
+        var bothEndScrs = new PointBothScreenings(secondPoint.toMachineObject(plotCanvasViewInfo));
         PointBothScreenings bothFSScrs = null;
         PointBothScreenings bothPSScrs = null;
 
@@ -59,7 +48,7 @@ public class Line extends GeometricObject implements IDrawable<Line, LineBothScr
             );
 
         }else if(floorStopper != null){
-            var bothFurthestPointScreenings = floorStopper.getFurtherPoint(startPoint, endPoint).to2Screenings(plotCanvasViewInfo);
+            var bothFurthestPointScreenings = floorStopper.getFurtherPoint(firstPoint, secondPoint).to2Screenings(plotCanvasViewInfo);
             return new LineBothScrs(
                     name,
                     new LineFloorScr(bothFSScrs.pointFloorScreening(), bothFurthestPointScreenings.pointFloorScreening()),
@@ -67,7 +56,7 @@ public class Line extends GeometricObject implements IDrawable<Line, LineBothScr
             );
 
         } else if (profileStopper != null) {
-            var bothFurthestPointScreenings = profileStopper.getFurtherPoint(startPoint, endPoint).to2Screenings(plotCanvasViewInfo);
+            var bothFurthestPointScreenings = profileStopper.getFurtherPoint(firstPoint, secondPoint).to2Screenings(plotCanvasViewInfo);
             return new LineBothScrs(
                     name,
                     new LineFloorScr(bothFurthestPointScreenings.pointFloorScreening(), bothPSScrs.pointFloorScreening()),
@@ -84,19 +73,18 @@ public class Line extends GeometricObject implements IDrawable<Line, LineBothScr
 
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
 
         Line other = (Line) obj;
-        return startPoint.equals(other.startPoint) && endPoint.equals(other.endPoint) ||
-                startPoint.equals(other.endPoint) && endPoint.equals(other.startPoint);
+        return firstPoint.equals(other.firstPoint) && secondPoint.equals(other.secondPoint) ||
+                firstPoint.equals(other.secondPoint) && secondPoint.equals(other.firstPoint);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(startPoint) + java.util.Objects.hash(endPoint);
+        return java.util.Objects.hash(firstPoint) + java.util.Objects.hash(secondPoint);
     }
 }

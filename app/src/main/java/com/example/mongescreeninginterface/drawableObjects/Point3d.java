@@ -106,12 +106,11 @@ public class Point3d extends GeometricObject implements IDrawable<Point3d, Point
         Point3d other = (Point3d) obj;
         return Double.compare(x, other.x) == 0 &&
                 Double.compare(y, other.y) == 0 &&
-                Double.compare(z, other.z) == 0 &&
-                name.equals(other.name);
+                Double.compare(z, other.z) == 0;
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(name, x, y, z);
+        return java.util.Objects.hash(x, y, z);
     }
 }

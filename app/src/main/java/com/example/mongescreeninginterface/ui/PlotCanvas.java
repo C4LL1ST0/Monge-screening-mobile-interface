@@ -6,17 +6,14 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.mongescreeninginterface.drawableObjects.Line;
+import com.example.mongescreeninginterface.drawable3d.Object3d;
+import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.drawableObjects.Point3d;
 import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
-import com.example.mongescreeninginterface.helpers.point.PointBothScreenings;
-import com.example.mongescreeninginterface.helpers.point.PointFloorScreening;
-import com.example.mongescreeninginterface.helpers.point.PointProfileScreening;
 
 import java.util.Objects;
 
@@ -73,8 +70,8 @@ public class PlotCanvas extends View {
                 drawPoint3d(canvas, pt);
             }
 
-            for(var seg : drawModel.getSegmentsToDraw()){
-                drawLine(canvas, seg);
+            for(var line : drawModel.getLinesToDraw()){
+                drawLine(canvas, line);
             }
         }
     }
@@ -91,8 +88,8 @@ public class PlotCanvas extends View {
         }
     }
 
-    public void drawLine(Canvas canvas, Line line){
-        var bothLineScrs = line.to2Screenings(plotCanvasViewInfo);
+    public void drawLine(Canvas canvas, LineLike line){
+        var bothLineScrs = (LineBothScrs) line.to2Screenings(plotCanvasViewInfo);
 
         canvas.drawLine(bothLineScrs.floorScr().start().x(),
                 bothLineScrs.floorScr().start().y(),
@@ -112,5 +109,9 @@ public class PlotCanvas extends View {
             canvas.drawText(line.name + "2", bothLineScrs.profileScr().end().x()+plotCanvasViewInfo.nameOffset,
                     bothLineScrs.profileScr().end().z()+plotCanvasViewInfo.nameOffset, pointPaint);
         }
+    }
+
+    public void drawObject3d(Canvas canvas, Object3d object3d){
+
     }
 }

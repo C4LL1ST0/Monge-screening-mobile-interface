@@ -2,7 +2,7 @@ package com.example.mongescreeninginterface.ui;
 
 import com.example.mongescreeninginterface.drawable3d.Cube;
 import com.example.mongescreeninginterface.drawableObjects.IDrawable;
-import com.example.mongescreeninginterface.drawableObjects.Line;
+import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.drawableObjects.Point3d;
 
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ public class DrawModel {
 
     private static DrawModel instance;
     private List<Point3d> pointsToDraw = new ArrayList<>();
-    private List<Line> segmentsToDraw = new ArrayList<>();
+    private List<LineLike> linesToDraw = new ArrayList<>();
 
     private DrawModel(){}
 
-    public static DrawModel makeDrawmodel(){
+    public static DrawModel getInstance(){
         if(instance == null){
             instance = new DrawModel();
         }
@@ -27,18 +27,18 @@ public class DrawModel {
     public void addObjectToDraw (IDrawable object){
         if (object instanceof Point3d) {
             pointsToDraw.add((Point3d) object);
-        }else if (object instanceof Line) {
-            segmentsToDraw.add((Line) object);
-            pointsToDraw.add(((Line) object).startPoint);
-            pointsToDraw.add(((Line) object).endPoint);
+        }else if (object instanceof LineLike) {
+            linesToDraw.add((LineLike) object);
+            pointsToDraw.add(((LineLike) object).firstPoint);
+            pointsToDraw.add(((LineLike) object).secondPoint);
 
-            if(((Line) object).floorStopper != null){
-                pointsToDraw.add(((Line) object).floorStopper);
+            if (((LineLike) object).floorStopper != null) {
+                pointsToDraw.add(((LineLike) object).floorStopper);
             }
-            if(((Line) object).profileStopper != null){
-                pointsToDraw.add(((Line) object).profileStopper);
+            if (((LineLike) object).profileStopper != null) {
+                pointsToDraw.add(((LineLike) object).profileStopper);
             }
-        } else if (object instanceof Cube) {
+        }else if (object instanceof Cube) {
             for (var edge : ((Cube) object).getEdges()){
                 addObjectToDraw(edge);
             }
@@ -46,7 +46,7 @@ public class DrawModel {
     }
 
     public List<Point3d> getPointsToDraw(){return pointsToDraw;}
-    public List<Line> getSegmentsToDraw(){return segmentsToDraw;}
+    public List<LineLike> getLinesToDraw(){return linesToDraw;}
 
     public void squashPoints(){
         var pointsToRemove = new ArrayList<Point3d>();
@@ -65,9 +65,9 @@ public class DrawModel {
                 pt1.name = pointsWithSameCoords.stream().map(pt -> pt.name).collect(Collectors.joining(" = ")) + "=" + pt1.name;
             }
 
-            for(var segment : getSegmentsToDraw()){
-                if(segment.startPoint.hasSameCoord(pt1)) segment.startPoint = pt1;
-                if(segment.endPoint.hasSameCoord(pt1)) segment.endPoint = pt1;
+            for(var segment : getLinesToDraw()){
+                if(segment.firstPoint.hasSameCoord(pt1)) segment.firstPoint = pt1;
+                if(segment.secondPoint.hasSameCoord(pt1)) segment.secondPoint = pt1;
 
                 if(segment.floorStopper != null){
                     if(segment.floorStopper.hasSameCoord(pt1)) segment.floorStopper = pt1;

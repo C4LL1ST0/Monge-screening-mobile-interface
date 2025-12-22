@@ -48,5 +48,3 @@ public class PlotCanvasViewInfo {
         return widthSegmentSize;
     }
 }
-
-

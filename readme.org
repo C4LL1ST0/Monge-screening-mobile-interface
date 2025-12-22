@@ -3,6 +3,6 @@
  - change how points are plotted
 ** IDEA [#B] UI
 - second activity?
-** IDEA [#A] 3D objects(cube etc.)
+** DONE [#A] 3D objects(cube etc.)
 ** DONE [#A] 3D objects rotation
  - anchor point + angle

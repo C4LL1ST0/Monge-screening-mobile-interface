@@ -4,9 +4,12 @@ import androidx.annotation.Nullable;
 
 import com.example.mongescreeninginterface.drawableObjects.Line;
 import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.drawableObjects.Segment;
 
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
+
+import java.util.Arrays;
 
 public class ArithmeticHelperFunctions {
 
@@ -21,9 +24,9 @@ public class ArithmeticHelperFunctions {
                 {plane.firstVector.zt, plane.secondVector.zt, -line.directionVector.zt}
         };
         float[][] results = {
-                {line.startPoint.x - plane.anchorPoint.x},
-                {line.startPoint.y - plane.anchorPoint.y},
-                {line.startPoint.z - plane.anchorPoint.z}
+                {line.firstPoint.x - plane.anchorPoint.x},
+                {line.firstPoint.y - plane.anchorPoint.y},
+                {line.firstPoint.z - plane.anchorPoint.z}
         };
 
         var a = new SimpleMatrix(calculations);
@@ -37,9 +40,9 @@ public class ArithmeticHelperFunctions {
         }
 
         return new Point3d[]{new Point3d(name,
-                (float) (line.startPoint.x + line.directionVector.xt * solved.get(2)),
-                (float) (line.startPoint.y + line.directionVector.yt * solved.get(2)),
-                (float) (line.startPoint.z + line.directionVector.zt * solved.get(2)))};
+                (float) (line.firstPoint.x + line.directionVector.xt * solved.get(2)),
+                (float) (line.firstPoint.y + line.directionVector.yt * solved.get(2)),
+                (float) (line.firstPoint.z + line.directionVector.zt * solved.get(2)))};
     }
 
     @Nullable
@@ -99,14 +102,49 @@ public class ArithmeticHelperFunctions {
         }
     }
 
+    @Nullable
     public static Point3d findFloorStopper(Line line){
         return findIntersection(line, ArithmeticHelperFunctions.pi, "P") == null ?
                 null : findIntersection(line, ArithmeticHelperFunctions.pi, "P")[0];
     }
 
+    @Nullable
     public static Point3d findProfileStopper(Line line){
         return findIntersection(line, ArithmeticHelperFunctions.ro, "N") == null ?
                 null : findIntersection(line, ArithmeticHelperFunctions.ro, "N")[0];
+    }
+
+    private static boolean pointIsInRange(Segment segment, Point3d possibleIntersection){
+        var xRange = new float[]{segment.firstPoint.x, segment.secondPoint.x};
+        Arrays.sort(xRange);
+        var yRange = new float[]{segment.firstPoint.y, segment.secondPoint.y};
+        Arrays.sort(yRange);
+        var zRange = new float[]{segment.firstPoint.z, segment.secondPoint.z};
+        Arrays.sort(zRange);
+
+        return possibleIntersection.x >= xRange[0] && possibleIntersection.x <= xRange[1] &&
+                possibleIntersection.y >= yRange[0] && possibleIntersection.y <= yRange[1] &&
+                possibleIntersection.z >= zRange[0] && possibleIntersection.z <= zRange[1];
+    }
+
+    @Nullable
+    public static Point3d findFloorStopper(Segment segment){
+        var line = new Line(segment.name, segment.firstPoint, segment.secondPoint);
+
+        if(line.floorStopper == null)
+            return null;
+
+        return pointIsInRange(segment, line.floorStopper) ? line.floorStopper : null;
+    }
+
+    @Nullable
+    public static Point3d findProfileStopper(Segment segment){
+        var line = new Line(segment.name, segment.firstPoint, segment.secondPoint);
+
+        if(line.profileStopper == null)
+            return null;
+
+        return pointIsInRange(segment, line.profileStopper) ? line.profileStopper : null;
     }
 
     public static double cosTheoremIsosceles(double b, double angle){

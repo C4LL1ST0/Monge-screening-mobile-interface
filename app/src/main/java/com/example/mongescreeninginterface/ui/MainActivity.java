@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.mongescreeninginterface.drawable3d.Cube;
 import com.example.mongescreeninginterface.drawableObjects.Line;
 import com.example.mongescreeninginterface.drawableObjects.Point3d;
+import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,15 +26,18 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
-        var drawModel = DrawModel.makeDrawmodel();
+        var drawModel = DrawModel.getInstance();
 
-        drawModel.addObjectToDraw(new Line("q", new Point3d("C", 3, 2, 1), new Point3d("D", -3, 2, 1)));
-        drawModel.addObjectToDraw(new Line("l", new Point3d("A", 1, 2, 3), new Point3d("B", 3, 2, 1)));
-        drawModel.squashPoints();
-
-//        Cube c = new Cube("K", new Point3d("S", 0, 7, 7), 2);
-//        drawModel.addObjectToDraw(c);
+//        drawModel.addObjectToDraw(new Line("q", new Point3d("C", 3, 2, 1), new Point3d("D", -3, 2, 1)));
+//        drawModel.addObjectToDraw(new Line("l", new Point3d("A", 1, 2, 3), new Point3d("B", 3, 2, 1)));
 //        drawModel.squashPoints();
+
+        Cube c = new Cube("K", new Point3d("S", 0, 5, 5), 4);
+        c = c.rotate(c.getCenter(), 30, PlaneOrientation.XY);
+        c = c.rotate(c.getCenter(), 20, PlaneOrientation.XZ);
+        c = c.rotate(c.getCenter(), 20, PlaneOrientation.YZ);
+        drawModel.addObjectToDraw(c);
+        drawModel.squashPoints();
 
         plotCanvas.setDrawModel(drawModel);
 

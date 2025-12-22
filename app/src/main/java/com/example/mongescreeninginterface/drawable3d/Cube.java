@@ -1,15 +1,11 @@
 package com.example.mongescreeninginterface.drawable3d;
 
-import com.example.mongescreeninginterface.drawableObjects.IDrawable;
-import com.example.mongescreeninginterface.drawableObjects.Line;
+import com.example.mongescreeninginterface.drawableObjects.Segment;
 import com.example.mongescreeninginterface.drawableObjects.Point3d;
-import com.example.mongescreeninginterface.helpers.GeometricObject;
+import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
-import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 
-public class Cube extends GeometricObject implements IDrawable<Cube, Object> { // redo better
-    private Point3d[] points = new Point3d[8];
-    private final Line[] edges = new Line[12];
+public class Cube extends Object3d {
     private final Point3d center;
     private final float edgeLength;
     public Cube(String name, Point3d center, float edgeLength){
@@ -27,9 +23,6 @@ public class Cube extends GeometricObject implements IDrawable<Cube, Object> { /
         this.points = points;
         initiateEdges();
     }
-
-    public Point3d[] getPoints(){return points;}
-    public Line[] getEdges(){return edges;}
     public Point3d getCenter(){return center;}
     public float getEdgeLengthLength() {return edgeLength;}
 
@@ -46,20 +39,28 @@ public class Cube extends GeometricObject implements IDrawable<Cube, Object> { /
     }
 
     private void initiateEdges(){
-        edges[0] = new Line("", points[0], points[1]);
-        edges[1] = new Line("", points[1], points[2]);
-        edges[2] = new Line("", points[2], points[3]);
-        edges[3] = new Line("", points[3], points[0]);
+        edges[0] = new Segment("", points[0], points[1]);
+        edges[1] = new Segment("", points[1], points[2]);
+        edges[2] = new Segment("", points[2], points[3]);
+        edges[3] = new Segment("", points[3], points[0]);
 
-        edges[4] = new Line("", points[4], points[5]);
-        edges[5] = new Line("", points[5], points[6]);
-        edges[6] = new Line("", points[6], points[7]);
-        edges[7] = new Line("", points[7], points[4]);
+        edges[4] = new Segment("", points[4], points[5]);
+        edges[5] = new Segment("", points[5], points[6]);
+        edges[6] = new Segment("", points[6], points[7]);
+        edges[7] = new Segment("", points[7], points[4]);
 
-        edges[8] = new Line("", points[0], points[4]);
-        edges[9] = new Line("", points[1], points[5]);
-        edges[10] = new Line("", points[2], points[6]);
-        edges[11] = new Line("", points[3], points[7]);
+        edges[8] = new Segment("", points[0], points[4]);
+        edges[9] = new Segment("", points[1], points[5]);
+        edges[10] = new Segment("", points[2], points[6]);
+        edges[11] = new Segment("", points[3], points[7]);
+    }
+
+    public Cube rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
+        var rotatedPoints = new Point3d[8];
+        for(int i = 0; i < rotatedPoints.length; i++){
+            rotatedPoints[i] = points[i].rotate(pointOfRotation, angle, planeOrientation);
+        }
+        return new Cube(name, rotatedPoints);
     }
 
     @Override
@@ -78,19 +79,5 @@ public class Cube extends GeometricObject implements IDrawable<Cube, Object> { /
     @Override
     public int hashCode() {
         return java.util.Objects.hash(center, edgeLength, points[0], points[7]);
-    }
-
-    @Override
-    public Cube toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
-        var machinePoints = new Point3d[8];
-        for (var i = 0; i<machinePoints.length; i++){
-            machinePoints[i] = points[i].toMachineObject(plotCanvasViewInfo);
-        }
-        return new Cube(name, machinePoints);
-    }
-
-    @Override
-    public Object to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo) {
-        return null;
     }
 }
