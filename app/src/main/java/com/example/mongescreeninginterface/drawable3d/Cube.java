@@ -64,22 +64,4 @@ public class Cube extends Object3d {
         }
         return new Cube(name, rotatedPoints);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Cube other = (Cube)obj;
-        return center.equals(other.center) &&
-                Float.compare(edgeLength, other.edgeLength) == 0 &&
-                points[0].equals(other.points[0]) &&
-                points[7].equals(other.points[7]);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return java.util.Objects.hash(center, edgeLength, points[0], points[7]);
-    }
 }

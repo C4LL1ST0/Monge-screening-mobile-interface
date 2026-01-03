@@ -56,6 +56,11 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d, Po
     }
 
     public Point3d rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
+        if(lookSameOnALevel(pointOfRotation, planeOrientation)) {
+            this.name+="'";
+            return this;
+        }
+
         Vector2d directionVector = new Vector2d(pointOfRotation, this, planeOrientation);
         var triangleBaseLength = ArithmeticHelperFunctions.cosTheoremIsosceles(directionVector.length(), angle);
 
@@ -89,6 +94,15 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d, Po
         return new Point3d(name+"'", rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
     }
 
+    public boolean lookSameOnALevel(Point3d other, PlaneOrientation planeOrientation){
+        if(planeOrientation == PlaneOrientation.XY && this. x == other.x && this.y == other.y)
+            return true;
+        else if (planeOrientation == PlaneOrientation.XZ && this. x == other.x && this.z == other.z)
+            return true;
+        else if (planeOrientation == PlaneOrientation.YZ && this. y == other.y && this.z == other.z)
+            return true;
+        else return false;
+    }
     public boolean hasSameCoord(Point3d other){
         return Double.compare(x, other.x) == 0 &&
                 Double.compare(y, other.y) == 0 &&
