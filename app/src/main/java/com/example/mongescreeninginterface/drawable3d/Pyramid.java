@@ -23,9 +23,10 @@ public class Pyramid extends Object3d{
         this.baseCenter = baseCenter;
         this.r = r;
         this.height = height;
-
         initiatePoints(pointCount);
         initiateEdges();
+
+        this.pointOfRotation = baseCenter;
     }
 
     public Pyramid(String name,  Point3d[] points, Point3d baseCenter, float r, float height){
@@ -35,6 +36,8 @@ public class Pyramid extends Object3d{
         this.height = height;
         this.points = points;
         initiateEdges();
+
+        this.pointOfRotation = baseCenter;
     }
 
     private void initiatePoints(int pointCount){
@@ -51,7 +54,7 @@ public class Pyramid extends Object3d{
 
     private void initiateEdges(){
         int pointCount = points.length;
-        edges = new Segment[pointCount*2];
+        edges = new Segment[(pointCount-1)*2];
 
         int edgeCount = 0;
         for(int i = 0; i < points.length-1; i++){
@@ -69,6 +72,7 @@ public class Pyramid extends Object3d{
         }
     }
 
+    @Override
     public Pyramid rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
         var rotatedPoints = new Point3d[points.length];
         for(int i = 0; i < rotatedPoints.length; i++){

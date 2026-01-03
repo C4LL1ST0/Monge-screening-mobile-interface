@@ -17,7 +17,7 @@ import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
 
 import java.util.Objects;
 
-public class PlotCanvas extends View {
+public class PlotCanvas extends View implements DrawModelListener {
     private final Paint objectPaint;
     private final Paint pointPaint;
     private final Paint axisPaint;
@@ -45,8 +45,9 @@ public class PlotCanvas extends View {
         pointPaint.setStrokeWidth(10);
     }
 
-    public void setDrawModel(DrawModel drawModel){
-        this.drawModel = drawModel;
+    public void setDrawModel(){
+        this.drawModel = DrawModel.getInstance();
+        this.drawModel.drawModelListener = this;
         invalidate();
     }
 
@@ -72,6 +73,10 @@ public class PlotCanvas extends View {
 
             for(var line : drawModel.getLinesToDraw()){
                 drawLine(canvas, line);
+            }
+
+            for(var object : drawModel.getObject3dsToDraw()){
+                drawObject3d(canvas, object);
             }
         }
     }
@@ -112,6 +117,16 @@ public class PlotCanvas extends View {
     }
 
     public void drawObject3d(Canvas canvas, Object3d object3d){
+        for (var edge : object3d.getEdges()){
+            drawLine(canvas, edge);
+        }
+        for(var pt : object3d.getPoints()){
+            drawPoint3d(canvas, pt);
+        }
+    }
 
+    @Override
+    public void onModelChanged() {
+        invalidate();
     }
 }

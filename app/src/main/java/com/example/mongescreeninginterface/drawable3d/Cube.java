@@ -14,6 +14,8 @@ public class Cube extends Object3d {
         this.edgeLength = edgeLength;
         initiatePoints(edgeLength);
         initiateEdges();
+
+        this.pointOfRotation = center;
     }
 
     public Cube(String name, Point3d[] points){
@@ -22,6 +24,8 @@ public class Cube extends Object3d {
         this.center = new Point3d("S", points[0].x+edgeLength/2, points[0].y-edgeLength/2, points[0].z+edgeLength/2);
         this.points = points;
         initiateEdges();
+
+        this.pointOfRotation = center;
     }
     public Point3d getCenter(){return center;}
     public float getEdgeLengthLength() {return edgeLength;}
@@ -57,6 +61,7 @@ public class Cube extends Object3d {
         edges[11] = new Segment("", points[3], points[7]);
     }
 
+    @Override
     public Cube rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
         var rotatedPoints = new Point3d[8];
         for(int i = 0; i < rotatedPoints.length; i++){

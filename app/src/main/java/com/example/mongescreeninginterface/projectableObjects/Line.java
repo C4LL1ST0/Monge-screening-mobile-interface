@@ -2,6 +2,7 @@ package com.example.mongescreeninginterface.projectableObjects;
 
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
 import com.example.mongescreeninginterface.helpers.LineLike;
+import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
 import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
 import com.example.mongescreeninginterface.helpers.line.LineFloorScr;
@@ -27,6 +28,13 @@ public class Line extends LineLike<Line> {
     public Line toMachineObject(PlotCanvasViewInfo plotCanvasViewInfo) {
         return new Line(name, firstPoint.toMachineObject(plotCanvasViewInfo), secondPoint.toMachineObject(plotCanvasViewInfo));
     }
+
+    @Override
+    public Line rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation) {
+        return new Line(name, firstPoint.rotate(pointOfRotation, angle, planeOrientation),
+                secondPoint.rotate(pointOfRotation, angle, planeOrientation));
+    }
+
     @Override
     public LineBothScrs to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo) {
         var bothStartScrs = new PointBothScreenings(firstPoint.toMachineObject(plotCanvasViewInfo));

@@ -1,5 +1,7 @@
 package com.example.mongescreeninginterface.ui;
 
+import androidx.annotation.Nullable;
+
 import com.example.mongescreeninginterface.drawable3d.Object3d;
 import com.example.mongescreeninginterface.projectableObjects.IProjectable;
 import com.example.mongescreeninginterface.helpers.LineLike;
@@ -10,10 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DrawModel {
-
     private static DrawModel instance;
-    private List<Point3d> pointsToDraw = new ArrayList<>();
-    private List<LineLike> linesToDraw = new ArrayList<>();
+    private final List<Point3d> pointsToDraw = new ArrayList<>();
+    private final List<LineLike> linesToDraw = new ArrayList<>();
+    private final List<Object3d> object3dsToDraw = new ArrayList<>();
+    private Object3d selectedObject;
+    public DrawModelListener drawModelListener;
 
     private DrawModel(){}
 
@@ -42,13 +46,31 @@ public class DrawModel {
     }
 
     public void addObjectToDraw (Object3d object){
-        for (var edge : object.getEdges()){
-            addObjectToDraw(edge);
-        }
+        object3dsToDraw.add(object);
+        if(drawModelListener != null)
+            drawModelListener.onModelChanged();
+    }
+
+    public void updateObjectToDraw(Object3d oldObject, Object3d newObject){
+        object3dsToDraw.remove(oldObject);
+        object3dsToDraw.add(newObject);
+        if(drawModelListener != null)
+            drawModelListener.onModelChanged();
     }
 
     public List<Point3d> getPointsToDraw(){return pointsToDraw;}
     public List<LineLike> getLinesToDraw(){return linesToDraw;}
+    public List<Object3d> getObject3dsToDraw(){return object3dsToDraw;}
+    @Nullable
+    public Object3d getSelectedObject(){
+        if(!object3dsToDraw.isEmpty()){
+            return object3dsToDraw.get(0);
+        }
+        return null;
+    }
+    public void setSelectedObject(Object3d selectedObject) {
+        this.selectedObject = selectedObject;
+    }
 
     public void squashPoints(){
         var pointsToRemove = new ArrayList<Point3d>();

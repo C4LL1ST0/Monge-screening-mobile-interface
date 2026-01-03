@@ -57,7 +57,7 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d, Po
 
     public Point3d rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
         if(lookSameOnALevel(pointOfRotation, planeOrientation)) {
-            this.name+="'";
+            this.name = name.endsWith("'") ? name : name+"'";;
             return this;
         }
 
@@ -91,7 +91,11 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d, Po
             this.z = originalZ;
         }
 
-        return new Point3d(name+"'", rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
+        var newName = name.endsWith("'") ? name : name+"'";
+        if(angle > 180)
+            return new Point3d(newName, rotatedPoints[0].x, rotatedPoints[0].y, rotatedPoints[0].z);
+        else
+           return new Point3d(newName, rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
     }
 
     public boolean lookSameOnALevel(Point3d other, PlaneOrientation planeOrientation){
