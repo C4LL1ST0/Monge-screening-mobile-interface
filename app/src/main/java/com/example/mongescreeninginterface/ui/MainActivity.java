@@ -2,12 +2,13 @@ package com.example.mongescreeninginterface.ui;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.mongescreeninginterface.R;
 import com.example.mongescreeninginterface.drawable3d.Cube;
 import com.example.mongescreeninginterface.drawable3d.Pyramid;
 import com.example.mongescreeninginterface.projectableObjects.Line;
@@ -23,29 +24,22 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
 
-        PlotCanvas plotCanvas = new PlotCanvas(this);
-        plotCanvas.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        ));
+        PlotCanvas plotCanvas = findViewById(R.id.plotCanvas);
 
+        Button btnX = findViewById(R.id.btnX);
+        btnX.setOnClickListener( v -> drawModel.setPlaneOfRotation(PlaneOrientation.YZ));
 
-//        drawModel.addObjectToDraw(new Line("q", new Point3d("C", 3, 2, 1), new Point3d("D", -3, 2, 1)));
-//        drawModel.addObjectToDraw(new Line("l", new Point3d("A", 1, 2, 3), new Point3d("B", 3, 2, 1)));
-//        drawModel.squashPoints();
+        Button btnY = findViewById(R.id.btnY);
+        btnY.setOnClickListener( v -> drawModel.setPlaneOfRotation(PlaneOrientation.XZ));
 
-//        Cube c = new Cube("K", new Point3d("S", 0, 8, 6), 3);
-//        drawModel.addObjectToDraw(c);
-
+        Button btnZ = findViewById(R.id.btnZ);
+        btnZ.setOnClickListener( v -> drawModel.setPlaneOfRotation(PlaneOrientation.XY));
 
         Pyramid p = new Pyramid("P", 7, new Point3d("", 0, 5, 3), 4, 6);
         drawModel.addObjectToDraw(p);
         drawModel.updateObjectToDraw(p, p.rotate(p.getBaseCenter(), 30, PlaneOrientation.YZ));
-
-        plotCanvas.setDrawModel();
-
-        setContentView(plotCanvas);
     }
 
     @Override
@@ -53,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
             drawModel.updateObjectToDraw(drawModel.getSelectedObject(),
                     drawModel.getSelectedObject().rotate(drawModel.getSelectedObject().getPointOfRotation(),
-                    5, PlaneOrientation.XY));
+                    5, drawModel.getPlaneOfRotation()));
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             drawModel.updateObjectToDraw(drawModel.getSelectedObject(),
                     drawModel.getSelectedObject().rotate(drawModel.getSelectedObject().getPointOfRotation(),
-                            355, PlaneOrientation.XY));
+                            355, drawModel.getPlaneOfRotation()));
             return true;
         }else return super.onKeyDown(keyCode, event);
     }

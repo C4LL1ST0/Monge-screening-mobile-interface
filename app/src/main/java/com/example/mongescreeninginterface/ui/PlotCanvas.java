@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -18,16 +19,24 @@ import com.example.mongescreeninginterface.helpers.line.LineBothScrs;
 import java.util.Objects;
 
 public class PlotCanvas extends View implements DrawModelListener {
-    private final Paint objectPaint;
-    private final Paint pointPaint;
-    private final Paint axisPaint;
+    private Paint objectPaint;
+    private Paint pointPaint;
+    private Paint axisPaint;
 
     private PlotCanvasViewInfo plotCanvasViewInfo;
     private DrawModel drawModel;
 
+    public PlotCanvas(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
     public PlotCanvas(Context context){
         super(context);
+        init();
+    }
 
+    private void init(){
         objectPaint = new Paint();
         objectPaint.setColor(Color.WHITE);
         objectPaint.setAntiAlias(true);
@@ -43,9 +52,7 @@ public class PlotCanvas extends View implements DrawModelListener {
         pointPaint.setAntiAlias(true);
         pointPaint.setTextSize(24);
         pointPaint.setStrokeWidth(10);
-    }
 
-    public void setDrawModel(){
         this.drawModel = DrawModel.getInstance();
         this.drawModel.drawModelListener = this;
         invalidate();
@@ -60,6 +67,7 @@ public class PlotCanvas extends View implements DrawModelListener {
 
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
+        if(plotCanvasViewInfo == null) return;
         super.onDraw(canvas);
 
         //axis

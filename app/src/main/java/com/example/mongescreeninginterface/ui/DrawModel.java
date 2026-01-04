@@ -3,6 +3,7 @@ package com.example.mongescreeninginterface.ui;
 import androidx.annotation.Nullable;
 
 import com.example.mongescreeninginterface.drawable3d.Object3d;
+import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.projectableObjects.IProjectable;
 import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.projectableObjects.Point3d;
@@ -18,8 +19,11 @@ public class DrawModel {
     private final List<Object3d> object3dsToDraw = new ArrayList<>();
     private Object3d selectedObject;
     public DrawModelListener drawModelListener;
+    private PlaneOrientation planeOfRotation;
 
-    private DrawModel(){}
+    private DrawModel(){
+        planeOfRotation = PlaneOrientation.XY;
+    }
 
     public static DrawModel getInstance(){
         if(instance == null){
@@ -61,6 +65,15 @@ public class DrawModel {
     public List<Point3d> getPointsToDraw(){return pointsToDraw;}
     public List<LineLike> getLinesToDraw(){return linesToDraw;}
     public List<Object3d> getObject3dsToDraw(){return object3dsToDraw;}
+
+    public PlaneOrientation getPlaneOfRotation() {
+        return planeOfRotation;
+    }
+
+    public void setPlaneOfRotation(PlaneOrientation planeOfRotation) {
+        this.planeOfRotation = planeOfRotation;
+    }
+
     @Nullable
     public Object3d getSelectedObject(){
         if(!object3dsToDraw.isEmpty()){
