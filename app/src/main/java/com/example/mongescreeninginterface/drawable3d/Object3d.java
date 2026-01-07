@@ -1,19 +1,26 @@
 package com.example.mongescreeninginterface.drawable3d;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
+import com.example.mongescreeninginterface.helpers.IDrawable;
+import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.projectableObjects.Segment;
 import com.example.mongescreeninginterface.helpers.GeometricObject;
+import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class Object3d extends GeometricObject{
+public class Object3d extends GeometricObject implements IDrawable, IRotable<Object3d> {
     protected Point3d[] points;
     protected Segment[] edges;
-    protected Point3d pointOfRotation;
     public Point3d[] getPoints(){return points;}
     public Segment[] getEdges(){return edges;}
+
+    protected Point3d pointOfRotation;
     public Point3d getPointOfRotation() {
         return pointOfRotation;
     }
@@ -38,6 +45,7 @@ public class Object3d extends GeometricObject{
         this.pointOfRotation = this.points[0];
     }
 
+    @Override
     public Object3d rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
         var rotatedEdges = new Segment[edges.length];
         for(int i = 0; i < edges.length; i++){
@@ -65,5 +73,15 @@ public class Object3d extends GeometricObject{
     public int hashCode() {
         if (edges == null) return 0;
         return new HashSet<>(Arrays.asList(edges)).hashCode();
+    }
+
+    @Override
+    public void drawSelf(Canvas canvas, PlotCanvasViewInfo plotCanvasViewInfo, Paint pointPaint, Paint objectPaint) {
+        for (var edge : this.getEdges()){
+            edge.drawSelf(canvas, plotCanvasViewInfo, pointPaint, objectPaint);
+        }
+        for(var pt : this.getPoints()){
+            pt.drawSelf(canvas, plotCanvasViewInfo, pointPaint, objectPaint);
+        }
     }
 }

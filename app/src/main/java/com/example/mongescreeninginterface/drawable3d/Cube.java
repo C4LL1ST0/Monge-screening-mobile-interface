@@ -1,11 +1,12 @@
 package com.example.mongescreeninginterface.drawable3d;
 
+import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.projectableObjects.Segment;
 import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
 
-public class Cube extends Object3d {
+public class Cube extends Object3d{
     private final Point3d center;
     private final float edgeLength;
     public Cube(String name, Point3d center, float edgeLength){
@@ -18,10 +19,11 @@ public class Cube extends Object3d {
         this.pointOfRotation = center;
     }
 
-    public Cube(String name, Point3d[] points){
+    public Cube(String name, Point3d[] points, Point3d center){
         super(name);
+        this.name = name;
         this.edgeLength = (float) new Vector3d(points[0], points[1]).length();
-        this.center = new Point3d("S", points[0].x+edgeLength/2, points[0].y-edgeLength/2, points[0].z+edgeLength/2);
+        this.center = center;
         this.points = points;
         initiateEdges();
 
@@ -67,6 +69,6 @@ public class Cube extends Object3d {
         for(int i = 0; i < rotatedPoints.length; i++){
             rotatedPoints[i] = points[i].rotate(pointOfRotation, angle, planeOrientation);
         }
-        return new Cube(name, rotatedPoints);
+        return new Cube(name, rotatedPoints, center);
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Monge screening interface</string>
+    <string name="insert_text">insert</string>
 </resources>

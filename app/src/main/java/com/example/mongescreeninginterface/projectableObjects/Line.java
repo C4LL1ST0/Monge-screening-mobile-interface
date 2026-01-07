@@ -1,6 +1,7 @@
 package com.example.mongescreeninginterface.projectableObjects;
 
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
+import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
@@ -13,6 +14,7 @@ import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 public class Line extends LineLike<Line> {
     public Line(String name, Point3d firstPoint, Point3d secondPoint){
         super(name);
+        this.name = name;
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
         this.directionVector = new Vector3d(firstPoint, secondPoint);
@@ -22,6 +24,8 @@ public class Line extends LineLike<Line> {
 
         var ps = ArithmeticHelperFunctions.findProfileStopper(this);
         if(ps != null) this.profileStopper = ps;
+
+        this.pointOfRotation = firstPoint;
     }
 
     @Override

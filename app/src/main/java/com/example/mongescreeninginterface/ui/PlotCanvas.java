@@ -75,61 +75,9 @@ public class PlotCanvas extends View implements DrawModelListener {
         canvas.drawLine(0, plotCanvasViewInfo.centerPoint.y, plotCanvasViewInfo.canvasWidth, plotCanvasViewInfo.centerPoint.y, axisPaint);
 
         if(drawModel != null){
-            for(var pt : drawModel.getPointsToDraw()){
-                drawPoint3d(canvas, pt);
+            for(var object : drawModel.getObjectsToDraw()){
+                object.drawSelf(canvas, plotCanvasViewInfo, pointPaint, objectPaint);
             }
-
-            for(var line : drawModel.getLinesToDraw()){
-                drawLine(canvas, line);
-            }
-
-            for(var object : drawModel.getObject3dsToDraw()){
-                drawObject3d(canvas, object);
-            }
-        }
-    }
-
-    public void drawPoint3d(Canvas canvas, Point3d point){
-        var pointM = point.toMachineObject(plotCanvasViewInfo);
-
-        canvas.drawPoint(pointM.x, pointM.y, pointPaint);
-        canvas.drawPoint(pointM.x, pointM.z, pointPaint);
-
-        if(!Objects.equals(point.name, "")){
-            canvas.drawText("[" + pointM.name + "]1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
-            canvas.drawText("[" + pointM.name + "]2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
-        }
-    }
-
-    public void drawLine(Canvas canvas, LineLike line){
-        var bothLineScrs = (LineBothScrs) line.to2Screenings(plotCanvasViewInfo);
-
-        canvas.drawLine(bothLineScrs.floorScr().start().x(),
-                bothLineScrs.floorScr().start().y(),
-                bothLineScrs.floorScr().end().x(),
-                bothLineScrs.floorScr().end().y(),
-                objectPaint);
-
-        canvas.drawLine(bothLineScrs.profileScr().start().x(),
-                bothLineScrs.profileScr().start().z(),
-                bothLineScrs.profileScr().end().x(),
-                bothLineScrs.profileScr().end().z(),
-                objectPaint);
-
-        if(!Objects.equals(line.name, "")){
-            canvas.drawText(line.name + "1", bothLineScrs.floorScr().end().x()+plotCanvasViewInfo.nameOffset,
-                    bothLineScrs.floorScr().end().y()+plotCanvasViewInfo.nameOffset, pointPaint);
-            canvas.drawText(line.name + "2", bothLineScrs.profileScr().end().x()+plotCanvasViewInfo.nameOffset,
-                    bothLineScrs.profileScr().end().z()+plotCanvasViewInfo.nameOffset, pointPaint);
-        }
-    }
-
-    public void drawObject3d(Canvas canvas, Object3d object3d){
-        for (var edge : object3d.getEdges()){
-            drawLine(canvas, edge);
-        }
-        for(var pt : object3d.getPoints()){
-            drawPoint3d(canvas, pt);
         }
     }
 

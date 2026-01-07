@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,11 +52,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="55dp"
+                <EditText
+                    android:id="@+id/ptNameText"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:text="point" />
+                    android:ems="2"
+                    android:hint="n:"
+                    android:inputType="text"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/ptXText"
@@ -67,11 +72,7 @@
                     android:hint="x: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/ptYText"
@@ -82,11 +83,7 @@
                     android:hint="y: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/ptZText"
@@ -96,11 +93,7 @@
                     android:hint="z: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
             </LinearLayout>
 
 
@@ -133,11 +126,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="55dp"
+                <EditText
+                    android:id="@+id/lnNameText"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:text="line" />
+                    android:ems="2"
+                    android:hint="n:"
+                    android:inputType="text"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/lnFirstText"
@@ -148,11 +146,7 @@
                     android:hint="pt1: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/lnSecondtText"
@@ -161,13 +155,9 @@
                     android:layout_marginEnd="10dp"
                     android:ems="2"
                     android:hint="pt2: "
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <Switch
                     android:layout_width="wrap_content"
@@ -205,11 +195,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="55dp"
+                <EditText
+                    android:id="@+id/cubeNameText"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:text="cube" />
+                    android:ems="2"
+                    android:hint="n:"
+                    android:inputType="text"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/cubeFirstText"
@@ -218,13 +213,9 @@
                     android:layout_marginEnd="10dp"
                     android:ems="2"
                     android:hint="pt1: "
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/cubeEdgeLengthText"
@@ -234,11 +225,7 @@
                     android:hint="a: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
             </LinearLayout>
 
@@ -270,26 +257,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="55dp"
+                <EditText
+                    android:id="@+id/pyramidNameText"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:text="pyramid" />
+                    android:ems="2"
+                    android:hint="n:"
+                    android:inputType="text"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04" />
 
                 <EditText
-                    android:id="@+id/pyramidbaseCenterText"
+                    android:id="@+id/pyramidBaseCenterText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
                     android:ems="2"
                     android:hint="pt1: "
+                    android:inputType="text"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04" />
+
+                <EditText
+                    android:id="@+id/pyramidPtCountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:ems="2"
+                    android:hint="pc: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/pyramidRadiusText"
@@ -300,11 +299,7 @@
                     android:hint="r: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
                 <EditText
                     android:id="@+id/pyramidHeightText"
@@ -314,11 +309,7 @@
                     android:hint="h: "
                     android:inputType="numberDecimal"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColorHint="#decc04" />
 
             </LinearLayout>
 

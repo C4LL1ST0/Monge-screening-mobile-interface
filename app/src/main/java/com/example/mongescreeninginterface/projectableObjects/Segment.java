@@ -1,6 +1,7 @@
 package com.example.mongescreeninginterface.projectableObjects;
 
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
+import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class Segment extends LineLike<Segment> {
     public Segment(String name, Point3d startPoint, Point3d endPoint){
         super(name);
+        this.name = name;
         this.firstPoint = startPoint;
         this.secondPoint = endPoint;
         this.directionVector = new Vector3d(startPoint, endPoint);

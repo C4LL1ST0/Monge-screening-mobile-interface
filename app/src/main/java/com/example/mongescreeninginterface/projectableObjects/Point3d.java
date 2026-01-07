@@ -1,8 +1,13 @@
 package com.example.mongescreeninginterface.projectableObjects;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
 import com.example.mongescreeninginterface.helpers.GeometricObject;
 import com.example.mongescreeninginterface.helpers.Circle;
+import com.example.mongescreeninginterface.helpers.IDrawable;
+import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector2d;
 import com.example.mongescreeninginterface.helpers.Vector3d;
@@ -11,16 +16,28 @@ import com.example.mongescreeninginterface.helpers.point.PointFloorScreening;
 import com.example.mongescreeninginterface.helpers.point.PointProfileScreening;
 import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 
-public class Point3d extends GeometricObject implements IProjectable<Point3d, PointBothScreenings> {
+import java.util.Objects;
+
+public class Point3d extends GeometricObject implements IProjectable<Point3d,
+        PointBothScreenings>, IDrawable, IRotable<Point3d> {
     public float x;
     public float y;
     public float z;
+    protected Point3d pointOfRotation;
+    public Point3d getPointOfRotation() {
+        return pointOfRotation;
+    }
+    public void setPointOfRotation(Point3d pointOfRotation) {
+        this.pointOfRotation = pointOfRotation;
+    }
 
     public Point3d(String name, float x, float y, float z){
         super(name);
         this.x = x;
         this.y = y;
         this.z = z;
+
+        this.pointOfRotation = ArithmeticHelperFunctions.zeroPoint;
     }
 
     @Override
@@ -55,6 +72,7 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d, Po
         else return p1;
     }
 
+    @Override
     public Point3d rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
         if(lookSameOnALevel(pointOfRotation, planeOrientation)) {
             this.name = name.endsWith("'") ? name : name+"'";;
@@ -127,5 +145,19 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d, Po
     @Override
     public int hashCode() {
         return java.util.Objects.hash(x, y, z);
+    }
+
+    @Override
+    public void drawSelf(Canvas canvas, PlotCanvasViewInfo plotCanvasViewInfo,
+                         Paint pointPaint, Paint objectPaint) {
+        var pointM = this.toMachineObject(plotCanvasViewInfo);
+
+        canvas.drawPoint(pointM.x, pointM.y, pointPaint);
+        canvas.drawPoint(pointM.x, pointM.z, pointPaint);
+
+        if(!Objects.equals(this.name, "")){
+            canvas.drawText("[" + pointM.name + "]1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText("[" + pointM.name + "]2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
+        }
     }
 }
