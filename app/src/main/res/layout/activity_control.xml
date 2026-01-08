@@ -7,28 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.ControlActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <Button
+        android:id="@+id/btnToCanvas"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="50dp"
-        android:padding="15dp"
+        android:background="@drawable/square_button"
+        android:padding="0dp"
+        android:text="--}"
+        android:textColor="#decc04"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/btnToCanvas"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/square_button"
-            android:padding="0dp"
-            android:text="--}"
-            android:textColor="#decc04"
-            android:textSize="14sp" />
-    </LinearLayout>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,296 +32,133 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+        <Spinner
+            android:id="@+id/objectSelectorSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
-                    android:id="@+id/ptNameText"
+                    android:id="@+id/nameText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
                     android:ems="2"
                     android:hint="n:"
                     android:inputType="text"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
+                    android:textColorHint="#decc04"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:layout_constraintEnd_toStartOf="@+id/pt1Text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
                 <EditText
-                    android:id="@+id/ptXText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="x: "
-                    android:inputType="numberDecimal"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/ptYText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="y: "
-                    android:inputType="numberDecimal"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/ptZText"
+                    android:id="@+id/pt1Text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:ems="2"
-                    android:hint="z: "
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-            </LinearLayout>
+                    android:textColorHint="#decc04"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
 
+                    app:layout_constraintEnd_toStartOf="@+id/pt2Text"
+                    app:layout_constraintStart_toEndOf="@+id/nameText"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside" />
 
-            <Button
-                android:id="@+id/insertPtButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/square_button"
-                android:onClick="onPtInsertClick"
-                android:padding="0dp"
-                android:text="@string/insert_text"
-                android:textAllCaps="false"
-                android:textColor="#decc04"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/pt2Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="2"
+                    android:inputType="text"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintEnd_toStartOf="@+id/num1Text"
+                    app:layout_constraintStart_toEndOf="@+id/pt1Text"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+                <EditText
+                    android:id="@+id/num1Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="2"
+                    android:inputType="none"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:layout_constraintEnd_toStartOf="@+id/num2Text"
+                    app:layout_constraintStart_toEndOf="@+id/pt2Text"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+                <EditText
+                    android:id="@+id/num2Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="2"
+                    android:inputType="none"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:layout_constraintEnd_toStartOf="@+id/num3Text"
+                    app:layout_constraintStart_toEndOf="@+id/num1Text"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+                <EditText
+                    android:id="@+id/num3Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="2"
+                    android:inputType="none"
+                    android:textColor="#decc04"
+                    android:textColorHint="#decc04"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/num2Text"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/insertButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <EditText
-                    android:id="@+id/lnNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="n:"
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/lnFirstText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="pt1: "
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/lnSecondtText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="pt2: "
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/segmentSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="segment"
-                    android:textColor="#decc04" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/insertLnButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/square_button"
-                android:onClick="onLineInsertClick"
-                android:padding="0dp"
-                android:text="@string/insert_text"
-                android:textAllCaps="false"
-                android:textColor="#decc04"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <EditText
-                    android:id="@+id/cubeNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="n:"
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/cubeFirstText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="pt1: "
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/cubeEdgeLengthText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:ems="2"
-                    android:hint="a: "
-                    android:inputType="numberDecimal"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/insertCubeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/square_button"
-                android:onClick="onCubeInsertClick"
-                android:padding="0dp"
-                android:text="@string/insert_text"
-                android:textAllCaps="false"
-                android:textColor="#decc04"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <EditText
-                    android:id="@+id/pyramidNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="n:"
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/pyramidBaseCenterText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="pt1: "
-                    android:inputType="text"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/pyramidPtCountText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="pc: "
-                    android:inputType="numberDecimal"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/pyramidRadiusText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:ems="2"
-                    android:hint="r: "
-                    android:inputType="numberDecimal"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-                <EditText
-                    android:id="@+id/pyramidHeightText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:ems="2"
-                    android:hint="h: "
-                    android:inputType="numberDecimal"
-                    android:textColor="#decc04"
-                    android:textColorHint="#decc04" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/insertPyramidButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/square_button"
-                android:onClick="onPyramidInsertClick"
-                android:padding="0dp"
-                android:text="@string/insert_text"
-                android:textAllCaps="false"
-                android:textColor="#decc04"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+            android:background="@drawable/square_button"
+            android:onClick="onInsertClick"
+            android:padding="0dp"
+            android:text="@string/insert_text"
+            android:textAllCaps="false"
+            android:textColor="#decc04"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
 
