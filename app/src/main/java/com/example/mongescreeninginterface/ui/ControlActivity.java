@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
 
 import com.example.mongescreeninginterface.R;
@@ -18,12 +19,12 @@ import java.time.Duration;
 
 public class ControlActivity extends AppCompatActivity {
 
-    Button ptIns, lineIns, cubeIns, pyramidIns;
-    EditText ptNameText, ptXText, ptYText, ptZText, lnNameText, linPt1Text, lnPt2Text,
+    private Button ptIns, lineIns, cubeIns, pyramidIns;
+    private EditText ptNameText, ptXText, ptYText, ptZText, lnNameText, lnPt1Text, lnPt2Text,
             cubeNameText, cubeCenterText, cubeEdgeLengthText, pyramidNameText,
             pyramidBaseCenterText, pyramidPtCountText, pyramidRText, pyramidHText;
-
-    DrawModel drawModel;
+    private SwitchCompat segmentSwitch;
+    private DrawModel drawModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,20 @@ public class ControlActivity extends AppCompatActivity {
         ptYText = findViewById(R.id.ptYText);
         ptZText = findViewById(R.id.ptZText);
 
-
+        lnNameText = findViewById(R.id.lnNameText);
+        lnPt1Text = findViewById(R.id.lnFirstText);
+        lnPt2Text = findViewById(R.id.lnSecondtText);
+        segmentSwitch = findViewById(R.id.segmentSwitch);
 
         cubeNameText = findViewById(R.id.cubeNameText);
         cubeCenterText = findViewById(R.id.cubeFirstText);
         cubeEdgeLengthText = findViewById(R.id.cubeEdgeLengthText);
+
+        pyramidNameText = findViewById(R.id.pyramidNameText);
+        pyramidBaseCenterText = findViewById(R.id.pyramidBaseCenterText);
+        pyramidPtCountText = findViewById(R.id.pyramidPtCountText);
+        pyramidRText = findViewById(R.id.pyramidRadiusText);
+        pyramidHText = findViewById(R.id.pyramidHeightText);
     }
 
     public void onPtInsertClick(View view) {
@@ -70,6 +80,15 @@ public class ControlActivity extends AppCompatActivity {
     }
 
     public void onLineInsertClick(View view) {
+        var name = lnNameText.getText().toString();
+        if(name.length() > 1) name = String.valueOf(name.charAt(0));
+
+        try{
+            drawModel.addLineLike(name, segmentSwitch.isChecked(), lnPt1Text.getText().toString()
+                    , lnPt2Text.getText().toString());
+        }catch (RuntimeException e){
+            Toast.makeText(ControlActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onCubeInsertClick(View view) {
@@ -80,7 +99,7 @@ public class ControlActivity extends AppCompatActivity {
             Toast.makeText(this, "Not a valid number", Toast.LENGTH_SHORT).show();
             return;
         }
-        var name = ptNameText.getText().toString();
+        var name = cubeNameText.getText().toString();
         if(name.length() > 1) name = String.valueOf(name.charAt(0));
         try {
             drawModel.addCube(name.toUpperCase(), cubeCenterText.getText().toString(), a);
@@ -90,5 +109,23 @@ public class ControlActivity extends AppCompatActivity {
     }
 
     public void onPyramidInsertClick(View view) {
+        float r = 0, h = 0;
+        int pointCount = 0;
+        try{
+            r = Float.parseFloat(pyramidRText.getText().toString());
+            h = Float.parseFloat(pyramidHText.getText().toString());
+            pointCount = Integer.parseInt(pyramidPtCountText.getText().toString());
+        }catch (NumberFormatException e){
+            Toast.makeText(this, "Not a valid number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        var name = pyramidNameText.getText().toString();
+        if(name.length() > 1) name = String.valueOf(name.charAt(0));
+        try {
+            drawModel.addPyramid(name, pyramidBaseCenterText.getText().toString(),
+                    pointCount, r, h);
+        } catch (RuntimeException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

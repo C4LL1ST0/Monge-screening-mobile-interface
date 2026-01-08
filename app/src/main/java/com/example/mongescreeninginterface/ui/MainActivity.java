@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             IRotable<?> rotated = selectedObject.rotate(selectedObject.getPointOfRotation(),
-                    5, drawModel.getPlaneOfRotation());
+                    355, drawModel.getPlaneOfRotation());
             drawModel.updateObjectToDraw(selectedObject, rotated);
             drawModel.setSelectedObject((IDrawable) rotated);
             return true;

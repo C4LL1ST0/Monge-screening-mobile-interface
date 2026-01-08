@@ -144,7 +144,7 @@
                     android:layout_marginEnd="10dp"
                     android:ems="2"
                     android:hint="pt1: "
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:textColor="#decc04"
                     android:textColorHint="#decc04" />
 
@@ -159,7 +159,8 @@
                     android:textColor="#decc04"
                     android:textColorHint="#decc04" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/segmentSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="segment"
