@@ -3,6 +3,9 @@
 - vykreslení bodů, přímek, úseček, krychlí, jehlanů
 - možnost otáčení objektů po libovolné ose
 
+** Obrázky
+[[file:/home/stepan/Downloads/m_krych.png]]
+[[file:/home/stepan/Downloads/m_krych.png]]
 ** Kompatibilita
 - android
 
