@@ -4,8 +4,8 @@
 - možnost otáčení objektů po libovolné ose
 
 ** Obrázky
-[[file:/home/stepan/Downloads/m_krych.png]]
-[[file:/home/stepan/Downloads/m_krych.png]]
+[[file:./images/m_prim.png]]
+[[file:./images/m_krych.png]]
 ** Kompatibilita
 - android
 
