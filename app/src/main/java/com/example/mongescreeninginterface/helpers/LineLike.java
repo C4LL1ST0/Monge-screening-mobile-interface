@@ -36,7 +36,7 @@ public abstract class LineLike<T extends LineLike<T>> extends GeometricObject
     @Override
     public void drawSelf(Canvas canvas, PlotCanvasViewInfo plotCanvasViewInfo,
                          Paint pointPaint, Paint objectPaint) {
-        var bothLineScrs = (LineBothScrs) this.to2Screenings(plotCanvasViewInfo);
+        LineBothScrs bothLineScrs = this.to2Screenings(plotCanvasViewInfo);
 
         canvas.drawLine(bothLineScrs.floorScr().start().x(),
                 bothLineScrs.floorScr().start().y(),

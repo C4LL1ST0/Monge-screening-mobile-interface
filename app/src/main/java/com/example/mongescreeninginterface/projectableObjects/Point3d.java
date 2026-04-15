@@ -15,7 +15,6 @@ import com.example.mongescreeninginterface.helpers.point.PointBothScreenings;
 import com.example.mongescreeninginterface.helpers.point.PointFloorScreening;
 import com.example.mongescreeninginterface.helpers.point.PointProfileScreening;
 import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
-
 import java.util.Objects;
 
 public class Point3d extends GeometricObject implements IProjectable<Point3d,
@@ -124,11 +123,6 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d,
         else if (planeOrientation == PlaneOrientation.YZ && this. y == other.y && this.z == other.z)
             return true;
         else return false;
-    }
-    public boolean hasSameCoord(Point3d other){
-        return Double.compare(x, other.x) == 0 &&
-                Double.compare(y, other.y) == 0 &&
-                Double.compare(z, other.z) == 0;
     }
 
     @Override

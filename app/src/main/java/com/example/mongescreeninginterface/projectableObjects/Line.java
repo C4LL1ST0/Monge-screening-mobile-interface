@@ -1,7 +1,6 @@
 package com.example.mongescreeninginterface.projectableObjects;
 
 import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
-import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.LineLike;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector3d;
@@ -52,7 +51,7 @@ public class Line extends LineLike<Line> {
         if(profileStopper != null)
             bothPSScrs = new PointBothScreenings(profileStopper.toMachineObject(plotCanvasViewInfo));
 
-        if(floorStopper != null && profileStopper != null){
+        if(floorStopper != null && profileStopper != null && !floorStopper.equals(profileStopper)){
             return new LineBothScrs(
                     name,
                     new LineFloorScr(bothFSScrs.pointFloorScreening(), bothPSScrs.pointFloorScreening()),
