@@ -7,6 +7,7 @@ import com.example.mongescreeninginterface.helpers.ArithmeticHelperFunctions;
 import com.example.mongescreeninginterface.helpers.GeometricObject;
 import com.example.mongescreeninginterface.helpers.Circle;
 import com.example.mongescreeninginterface.helpers.IDrawable;
+import com.example.mongescreeninginterface.helpers.IMovable;
 import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.helpers.Vector2d;
@@ -18,7 +19,7 @@ import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 import java.util.Objects;
 
 public class Point3d extends GeometricObject implements IProjectable<Point3d,
-        PointBothScreenings>, IDrawable, IRotable<Point3d> {
+        PointBothScreenings>, IDrawable, IRotable<Point3d>, IMovable<Point3d> {
     public float x;
     public float y;
     public float z;
@@ -153,5 +154,15 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d,
             canvas.drawText("[" + pointM.name + "]1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
             canvas.drawText("[" + pointM.name + "]2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
         }
+    }
+
+    @Override
+    public Point3d move(float distance, PlaneOrientation planeOrientation) {
+        if(planeOrientation == PlaneOrientation.XY)
+            return new Point3d(this.name, this.x, this.y, this.z + distance);
+        else if (planeOrientation == PlaneOrientation.XZ)
+            return new Point3d(this.name, this.x, this.y + distance, this.z);
+        else
+            return new Point3d(this.name, this.x + distance, this.y, this.z);
     }
 }

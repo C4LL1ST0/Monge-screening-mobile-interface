@@ -2,19 +2,20 @@ package com.example.mongescreeninginterface.ui;
 
 
 import com.example.mongescreeninginterface.drawable3d.Cube;
-import com.example.mongescreeninginterface.drawable3d.Object3d;
 import com.example.mongescreeninginterface.drawable3d.Pyramid;
 import com.example.mongescreeninginterface.helpers.IDrawable;
+import com.example.mongescreeninginterface.helpers.IManipulatable;
+import com.example.mongescreeninginterface.helpers.IMovable;
 import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
-import com.example.mongescreeninginterface.helpers.LineLike;
+import com.example.mongescreeninginterface.helpers.UserObjectAction;
+import com.example.mongescreeninginterface.helpers.UserObjectActionInfo;
 import com.example.mongescreeninginterface.projectableObjects.Line;
 import com.example.mongescreeninginterface.projectableObjects.Point3d;
 import com.example.mongescreeninginterface.projectableObjects.Segment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DrawModel {
     private static DrawModel instance;
@@ -34,28 +35,35 @@ public class DrawModel {
         this.planeOfRotation = planeOfRotation;
     }
 
+    private UserObjectActionInfo userObjectActionInfo;
 
+    public void toggleAction(){
+        userObjectActionInfo.toggleAction();
+    }
+
+    public UserObjectAction getAction(){
+        return userObjectActionInfo.getAction();
+    }
     private final List<IDrawable> objectsToDraw = new ArrayList<>();
 
     public List<IDrawable> getObjectsToDraw() {
         return objectsToDraw;
     }
 
-    private IRotable<?> selectedObject;
-    public IRotable<?> getSelectedObject(){
+    private IManipulatable selectedObject;
+    public IManipulatable getSelectedObject(){
         if(selectedObject != null){
             return selectedObject;
         }
         throw new RuntimeException("No object selected.");
     }
-    public void setSelectedObject(IDrawable selectedObject) {
-        if(selectedObject instanceof IRotable<?>){
-            this.selectedObject = (IRotable<?>) selectedObject;
-        }
+    public void setSelectedObject(IManipulatable selectedObject) {
+        this.selectedObject = selectedObject;
     }
 
     private DrawModel(){
         planeOfRotation = PlaneOrientation.XY;
+        userObjectActionInfo = UserObjectActionInfo.getInstance();
     }
 
     public void addPoint(String name, float x, float y, float z){
@@ -96,10 +104,10 @@ public class DrawModel {
         setSelectedObject(pyramid);
     }
 
-    public void updateObjectToDraw(IRotable<?> oldObject, IRotable<?> newObject){
-        if(oldObject instanceof IDrawable  && newObject instanceof IDrawable){
-            objectsToDraw.remove((IDrawable) oldObject);
-            objectsToDraw.add((IDrawable) newObject);
+    public void updateObjectToDraw(IManipulatable oldObject, IManipulatable newObject){
+        if(oldObject instanceof IDrawable oldO  && newObject instanceof IDrawable newO){
+            objectsToDraw.remove(oldO);
+            objectsToDraw.add(newO);
             if(drawModelListener != null)
                 drawModelListener.onModelChanged();
         }
@@ -113,38 +121,18 @@ public class DrawModel {
                 .findFirst()
                 .orElse(null);
     }
-//    public void squashPoints(){
-//        var pointsToRemove = new ArrayList<Point3d>();
-//
-//        for(var pt1 : getPointsToDraw()){
-//            if(pointsToRemove.contains(pt1)) continue;
-//
-//            var pointsWithSameCoords = new ArrayList<Point3d>();
-//
-//            for(var pt2 : getPointsToDraw()){
-//                if(pt1.equals(pt2)) continue;
-//                if(pt1.hasSameCoord(pt2)) pointsWithSameCoords.add(pt2);
-//            }
-//
-//            if(!pointsWithSameCoords.isEmpty()){
-//                pt1.name = pointsWithSameCoords.stream().map(pt -> pt.name).collect(Collectors.joining(" = ")) + "=" + pt1.name;
-//            }
-//
-//            for(var segment : getLinesToDraw()){
-//                if(segment.firstPoint.hasSameCoord(pt1)) segment.firstPoint = pt1;
-//                if(segment.secondPoint.hasSameCoord(pt1)) segment.secondPoint = pt1;
-//
-//                if(segment.floorStopper != null){
-//                    if(segment.floorStopper.hasSameCoord(pt1)) segment.floorStopper = pt1;
-//                }
-//                if(segment.profileStopper != null){
-//                    if(segment.profileStopper.hasSameCoord(pt1)) segment.profileStopper = pt1;
-//                }
-//            }
-//
-//            pointsToRemove.addAll(pointsWithSameCoords);
-//        }
-//
-//        pointsToDraw.removeAll(pointsToRemove);
-//    }
+
+    public void rotateObject(IRotable<?> rotableObject, int angle){
+        IRotable<?> rotated = rotableObject.rotate(rotableObject.getPointOfRotation(),
+                angle, getPlaneOfRotation());
+        updateObjectToDraw(rotableObject, rotated);
+        setSelectedObject(rotated);
+    }
+
+    public void moveObject(IMovable<?> movableObject, float distance){
+        IMovable<?> moved = movableObject.move(distance,
+                getPlaneOfRotation());
+        updateObjectToDraw(movableObject, moved);
+        setSelectedObject(moved);
+    }
 }

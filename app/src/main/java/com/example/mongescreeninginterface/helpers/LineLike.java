@@ -13,7 +13,8 @@ import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 import java.util.Objects;
 
 public abstract class LineLike<T extends LineLike<T>> extends GeometricObject
-        implements IProjectable<T, LineBothScrs>, IDrawable, IRotable<LineLike<?>> {
+        implements IProjectable<T, LineBothScrs>, IDrawable, IRotable<LineLike<T>>,
+        IMovable<LineLike<T>> {
     public Point3d firstPoint;
     public Point3d secondPoint;
     @Nullable

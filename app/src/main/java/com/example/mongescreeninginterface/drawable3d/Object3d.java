@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.example.mongescreeninginterface.helpers.IDrawable;
+import com.example.mongescreeninginterface.helpers.IMovable;
 import com.example.mongescreeninginterface.helpers.IRotable;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 import com.example.mongescreeninginterface.projectableObjects.Point3d;
@@ -14,7 +15,8 @@ import com.example.mongescreeninginterface.ui.PlotCanvasViewInfo;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class Object3d extends GeometricObject implements IDrawable, IRotable<Object3d> {
+public class Object3d extends GeometricObject implements IDrawable, IRotable<Object3d>,
+        IMovable<Object3d> {
     protected Point3d[] points;
     protected Segment[] edges;
     public Point3d[] getPoints(){return points;}
@@ -52,6 +54,15 @@ public class Object3d extends GeometricObject implements IDrawable, IRotable<Obj
             rotatedEdges[i] = edges[i].rotate(pointOfRotation, angle, planeOrientation);
         }
         return new Object3d(name, rotatedEdges);
+    }
+
+    @Override
+    public Object3d move(float distance, PlaneOrientation planeOrientation) {
+        var movedEdges = new Segment[edges.length];
+        for(int i = 0; i < edges.length; i++){
+            movedEdges[i] = edges[i].move(distance, planeOrientation);
+        }
+        return new Object3d(name, movedEdges);
     }
 
     @Override

@@ -20,10 +20,7 @@ public class Segment extends LineLike<Segment> {
         this.firstPoint = startPoint;
         this.secondPoint = endPoint;
         this.directionVector = new Vector3d(startPoint, endPoint);
-
-        this.floorStopper = ArithmeticHelperFunctions.findFloorStopper(this);
-
-        this.profileStopper = ArithmeticHelperFunctions.findProfileStopper(this);
+        this.pointOfRotation = firstPoint;
     }
 
     @Override
@@ -36,6 +33,12 @@ public class Segment extends LineLike<Segment> {
     public Segment rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation) {
         return new Segment(name, firstPoint.rotate(pointOfRotation, angle, planeOrientation),
                 secondPoint.rotate(pointOfRotation, angle, planeOrientation));
+    }
+
+    @Override
+    public Segment move(float distance, PlaneOrientation planeOrientation) {
+        return new Segment(name, firstPoint.move(distance, planeOrientation),
+                secondPoint.move(distance, planeOrientation));
     }
 
     @Override

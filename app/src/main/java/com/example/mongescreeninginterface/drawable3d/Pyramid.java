@@ -82,4 +82,15 @@ public class Pyramid extends Object3d{
         var rotatedBaseCenter = baseCenter.rotate(pointOfRotation, angle, planeOrientation);
         return new Pyramid(name, rotatedPoints, rotatedBaseCenter, r, height);
     }
+
+    @Override
+    public Pyramid move(float distance, PlaneOrientation planeOrientation){
+        var movedPoints = new Point3d[points.length];
+        for(int i = 0; i < movedPoints.length; i++){
+            movedPoints[i] = points[i].move(distance, planeOrientation);
+        }
+
+        var movedBaseCenter = baseCenter.move(distance, planeOrientation);
+        return new Pyramid(name, movedPoints, movedBaseCenter, r, height);
+    }
 }

@@ -11,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.mongescreeninginterface.R;
-import com.example.mongescreeninginterface.drawable3d.Pyramid;
 import com.example.mongescreeninginterface.helpers.IDrawable;
+import com.example.mongescreeninginterface.helpers.IManipulatable;
+import com.example.mongescreeninginterface.helpers.IMovable;
 import com.example.mongescreeninginterface.helpers.IRotable;
-import com.example.mongescreeninginterface.projectableObjects.Point3d;
+import com.example.mongescreeninginterface.helpers.UserObjectAction;
+import com.example.mongescreeninginterface.helpers.UserObjectActionInfo;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,30 +44,48 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnZ = findViewById(R.id.btnZ);
         btnZ.setOnClickListener( v -> drawModel.setPlaneOfRotation(PlaneOrientation.XY));
+
+        Button btnRM = findViewById(R.id.btnRM);
+        btnRM.setOnClickListener(v -> drawModel.toggleAction());
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        IRotable<?> selectedObject;
+        IManipulatable selectedObject;
         try {
             selectedObject = drawModel.getSelectedObject();
         }catch (RuntimeException e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             return true;
         }
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            IRotable<?> rotated = selectedObject.rotate(selectedObject.getPointOfRotation(),
-                    5, drawModel.getPlaneOfRotation());
-            drawModel.updateObjectToDraw(selectedObject, rotated);
-            drawModel.setSelectedObject((IDrawable) rotated);
-
+            switch (drawModel.getAction()){
+                case ROTATE:
+                    if(!(selectedObject instanceof IRotable<?> rotableObject))
+                        return true;
+                    drawModel.rotateObject(rotableObject, 5);
+                    break;
+                case MOVE:
+                    if(!(selectedObject instanceof IMovable<?> movableObject))
+                        return true;
+                    drawModel.moveObject(movableObject, 0.2f);
+                    break;
+            }
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            IRotable<?> rotated = selectedObject.rotate(selectedObject.getPointOfRotation(),
-                    355, drawModel.getPlaneOfRotation());
-            drawModel.updateObjectToDraw(selectedObject, rotated);
-            drawModel.setSelectedObject((IDrawable) rotated);
+            switch (drawModel.getAction()){
+                case ROTATE:
+                    if(!(selectedObject instanceof IRotable<?> rotableObject))
+                        return true;
+                    drawModel.rotateObject(rotableObject, 355);
+                    break;
+                case MOVE:
+                    if(!(selectedObject instanceof IMovable<?> movableObject))
+                        return true;
+                    drawModel.moveObject(movableObject, -0.2f);
+                    break;
+            }
             return true;
         }else return super.onKeyDown(keyCode, event);
     }

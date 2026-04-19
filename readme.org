@@ -19,6 +19,6 @@
  - anchor point + angle
 *** IDEA [#B] více objektů naráz
 - výběr z nich
-*** IDEA [#B] posouvání objektů
+*** DONE [#B] posouvání objektů
 *** IDEA [#B] uživatelská definice složitých těles
 *** IDEA [#B] persistence

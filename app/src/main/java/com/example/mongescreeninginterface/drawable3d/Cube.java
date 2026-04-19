@@ -71,4 +71,13 @@ public class Cube extends Object3d{
         }
         return new Cube(name, rotatedPoints, center);
     }
+
+    @Override
+    public Cube move(float distance, PlaneOrientation planeOrientation) {
+        var movedPoints = new Point3d[8];
+        for(int i = 0; i < movedPoints.length; i++){
+            movedPoints[i] = points[i].move(distance, planeOrientation);
+        }
+        return new Cube(name, movedPoints, center);
+    }
 }

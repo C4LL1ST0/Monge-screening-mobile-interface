@@ -39,6 +39,12 @@ public class Line extends LineLike<Line> {
     }
 
     @Override
+    public Line move(float distance, PlaneOrientation planeOrientation) {
+        return new Line(name, firstPoint.move(distance, planeOrientation),
+                secondPoint.move(distance, planeOrientation));
+    }
+
+    @Override
     public LineBothScrs to2Screenings(PlotCanvasViewInfo plotCanvasViewInfo) {
         var bothStartScrs = new PointBothScreenings(firstPoint.toMachineObject(plotCanvasViewInfo));
         var bothEndScrs = new PointBothScreenings(secondPoint.toMachineObject(plotCanvasViewInfo));
