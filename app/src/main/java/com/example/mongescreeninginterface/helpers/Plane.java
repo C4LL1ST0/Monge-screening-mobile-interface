@@ -16,8 +16,8 @@ public class Plane extends GeometricObject {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;  // same reference
-        if (obj == null || getClass() != obj.getClass()) return false; // null or different class
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Plane other = (Plane) obj;
 

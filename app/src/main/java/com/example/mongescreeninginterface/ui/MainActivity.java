@@ -19,6 +19,8 @@ import com.example.mongescreeninginterface.helpers.UserObjectAction;
 import com.example.mongescreeninginterface.helpers.UserObjectActionInfo;
 import com.example.mongescreeninginterface.helpers.PlaneOrientation;
 
+import java.time.Duration;
+
 public class MainActivity extends AppCompatActivity {
     private final DrawModel drawModel = DrawModel.getInstance();
 
@@ -51,42 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        IManipulatable selectedObject;
-        try {
-            selectedObject = drawModel.getSelectedObject();
-        }catch (RuntimeException e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return true;
+        if(keyCode != KeyEvent.KEYCODE_VOLUME_DOWN && keyCode != KeyEvent.KEYCODE_VOLUME_UP){
+            return super.onKeyDown(keyCode, event);
         }
-
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            switch (drawModel.getAction()){
-                case ROTATE:
-                    if(!(selectedObject instanceof IRotable<?> rotableObject))
-                        return true;
-                    drawModel.rotateObject(rotableObject, 5);
-                    break;
-                case MOVE:
-                    if(!(selectedObject instanceof IMovable<?> movableObject))
-                        return true;
-                    drawModel.moveObject(movableObject, 0.2f);
-                    break;
-            }
-            return true;
-        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            switch (drawModel.getAction()){
-                case ROTATE:
-                    if(!(selectedObject instanceof IRotable<?> rotableObject))
-                        return true;
-                    drawModel.rotateObject(rotableObject, 355);
-                    break;
-                case MOVE:
-                    if(!(selectedObject instanceof IMovable<?> movableObject))
-                        return true;
-                    drawModel.moveObject(movableObject, -0.2f);
-                    break;
-            }
-            return true;
-        }else return super.onKeyDown(keyCode, event);
+        try {
+            drawModel.doUserAction(keyCode);
+        } catch (RuntimeException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 }

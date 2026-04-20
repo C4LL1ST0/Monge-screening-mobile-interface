@@ -78,6 +78,7 @@ public class Cube extends Object3d{
         for(int i = 0; i < movedPoints.length; i++){
             movedPoints[i] = points[i].move(distance, planeOrientation);
         }
-        return new Cube(name, movedPoints, center);
+        var newCenter = center.move(distance, planeOrientation);
+        return new Cube(name, movedPoints, newCenter);
     }
 }

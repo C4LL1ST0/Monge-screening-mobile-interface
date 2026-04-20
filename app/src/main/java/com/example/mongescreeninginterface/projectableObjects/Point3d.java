@@ -75,7 +75,6 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d,
     @Override
     public Point3d rotate(Point3d pointOfRotation, float angle, PlaneOrientation planeOrientation){
         if(lookSameOnALevel(pointOfRotation, planeOrientation)) {
-            this.name = name.endsWith("'") ? name : name+"'";;
             return this;
         }
 
@@ -109,11 +108,10 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d,
             this.z = originalZ;
         }
 
-        var newName = name.endsWith("'") ? name : name+"'";
         if(angle > 180)
-            return new Point3d(newName, rotatedPoints[0].x, rotatedPoints[0].y, rotatedPoints[0].z);
+            return new Point3d(name, rotatedPoints[0].x, rotatedPoints[0].y, rotatedPoints[0].z);
         else
-           return new Point3d(newName, rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
+           return new Point3d(name, rotatedPoints[1].x, rotatedPoints[1].y, rotatedPoints[1].z);
     }
 
     public boolean lookSameOnALevel(Point3d other, PlaneOrientation planeOrientation){
@@ -151,8 +149,8 @@ public class Point3d extends GeometricObject implements IProjectable<Point3d,
         canvas.drawPoint(pointM.x, pointM.z, pointPaint);
 
         if(!Objects.equals(this.name, "")){
-            canvas.drawText("[" + pointM.name + "]1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
-            canvas.drawText("[" + pointM.name + "]2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText(pointM.name + "1", pointM.x-plotCanvasViewInfo.nameOffset, pointM.y-plotCanvasViewInfo.nameOffset, pointPaint);
+            canvas.drawText(pointM.name + "2", pointM.x-plotCanvasViewInfo.nameOffset, pointM.z-plotCanvasViewInfo.nameOffset, pointPaint);
         }
     }
 

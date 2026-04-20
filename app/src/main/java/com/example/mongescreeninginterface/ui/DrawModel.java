@@ -1,6 +1,9 @@
 package com.example.mongescreeninginterface.ui;
 
 
+import android.view.KeyEvent;
+import android.widget.Toast;
+
 import com.example.mongescreeninginterface.drawable3d.Cube;
 import com.example.mongescreeninginterface.drawable3d.Pyramid;
 import com.example.mongescreeninginterface.helpers.IDrawable;
@@ -134,5 +137,42 @@ public class DrawModel {
                 getPlaneOfRotation());
         updateObjectToDraw(movableObject, moved);
         setSelectedObject(moved);
+    }
+
+    public void doUserAction(int keyCode){
+        IManipulatable selectedObject;
+        try {
+            selectedObject = getSelectedObject();
+        }catch (RuntimeException e){
+            throw e;
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            switch (getAction()){
+                case ROTATE:
+                    if(!(selectedObject instanceof IRotable<?> rotableObject))
+                        throw new IllegalArgumentException("Selected object not rotable.");
+                    rotateObject(rotableObject, 5);
+                    break;
+                case MOVE:
+                    if(!(selectedObject instanceof IMovable<?> movableObject))
+                        throw new IllegalArgumentException("Selected object not movable.");
+                    moveObject(movableObject, 0.2f);
+                    break;
+            }
+        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            switch (getAction()){
+                case ROTATE:
+                    if(!(selectedObject instanceof IRotable<?> rotableObject))
+                        throw new IllegalArgumentException("Selected object not rotable.");
+                    rotateObject(rotableObject, 355);
+                    break;
+                case MOVE:
+                    if(!(selectedObject instanceof IMovable<?> movableObject))
+                        throw new IllegalArgumentException("Selected object not movable.");
+                    moveObject(movableObject, -0.2f);
+                    break;
+            }
+        }
     }
 }

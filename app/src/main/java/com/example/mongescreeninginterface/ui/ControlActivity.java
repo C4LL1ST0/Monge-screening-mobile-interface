@@ -160,8 +160,8 @@ public class ControlActivity extends AppCompatActivity implements AdapterView.On
         if(name.length() > 1) name = String.valueOf(name.charAt(0));
 
         try{
-            drawModel.addLineLike(name, asSegment, pt1Text.getText().toString()
-                    , pt2Text.getText().toString());
+            drawModel.addLineLike(name, asSegment, pt1Text.getText().toString().toUpperCase()
+                    , pt2Text.getText().toString().toUpperCase());
         }catch (RuntimeException e){
             Toast.makeText(ControlActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -186,7 +186,7 @@ public class ControlActivity extends AppCompatActivity implements AdapterView.On
         var name = nameText.getText().toString();
         if(name.length() > 1) name = String.valueOf(name.charAt(0));
         try {
-            drawModel.addCube(name.toUpperCase(), pt1Text.getText().toString(), a);
+            drawModel.addCube(name.toUpperCase(), pt1Text.getText().toString().toUpperCase(), a);
         }catch (RuntimeException e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -206,7 +206,7 @@ public class ControlActivity extends AppCompatActivity implements AdapterView.On
         var name = nameText.getText().toString();
         if(name.length() > 1) name = String.valueOf(name.charAt(0));
         try {
-            drawModel.addPyramid(name, pt1Text.getText().toString(),
+            drawModel.addPyramid(name, pt1Text.getText().toString().toUpperCase(),
                     pointCount, r, h);
         } catch (RuntimeException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
